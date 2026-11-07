@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "Please cite this checklist using the metadata in this file."
+title: "WooCommerce to Shopify catalog migration checklist"
+version: "1.0.0"
+date-released: "2026-11-07"
+# CC BY 4.0 covers the documents, including the checklist, the practice catalogs, and this file.
+# The scripts, tests, and the data files beside them are MIT. See LICENSE.
+license: CC-BY-4.0
+repository-code: "https://github.com/ericcheng0904-pixel/migration-checklist"
+url: "https://github.com/ericcheng0904-pixel/migration-checklist"
+authors:
+  - name: "ericcheng0904-pixel"

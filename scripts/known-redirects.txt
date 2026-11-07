@@ -1,0 +1,35 @@
+# Documented redirects.
+# An official link (any redirect) and a permanent redirect (301 or 308) of
+# any other link must be listed here. Each data line is:
+# from-url to-url YYYY-MM-DD
+# Blank lines and lines starting with # are ignored.
+#
+# Checked 2026-10-25. No official link redirected. https://csvkit.readthedocs.io/
+# answers 302 to /en/latest/ and is not an official link, so it is reported
+# as an ordinary redirect and is not listed here.
+#
+# https://old.example.test/path https://new.example.test/path 2026-10-25
+#
+# Checked 2026-10-27. BigCommerce Help Center articles add ?language=en_US.
+# The 301 redirects article now lives at MSF-301-Redirects. The price list
+# developer page now lives on docs.bigcommerce.com.
+https://support.bigcommerce.com/s/article/Legacy-Import-Export-Overview https://support.bigcommerce.com/s/article/Legacy-Import-Export-Overview?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Exporting-Products https://support.bigcommerce.com/s/article/Exporting-Products?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Exporting-Your-Products https://support.bigcommerce.com/s/article/Exporting-Your-Products?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Modern-Import-Export-Overview https://support.bigcommerce.com/s/article/Modern-Import-Export-Overview?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Using-Sale-Pricing https://support.bigcommerce.com/s/article/Using-Sale-Pricing?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Complex-Attributes https://support.bigcommerce.com/s/article/Complex-Attributes?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Updating-via-Import https://support.bigcommerce.com/s/article/Updating-via-Import?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Legacy-Product-Fields https://support.bigcommerce.com/s/article/Legacy-Product-Fields?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Importing-Your-First-Product https://support.bigcommerce.com/s/article/Importing-Your-First-Product?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Importing-Complex-Attributes https://support.bigcommerce.com/s/article/Importing-Complex-Attributes?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Legacy-to-Modern-Product-Transfer https://support.bigcommerce.com/s/article/Legacy-to-Modern-Product-Transfer?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Product-Options-v3 https://support.bigcommerce.com/s/article/Product-Options-v3?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Bulk-Pricing https://support.bigcommerce.com/s/article/Bulk-Pricing?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Price-Lists https://support.bigcommerce.com/s/article/Price-Lists?language=en_US 2026-10-27
+https://developer.bigcommerce.com/docs/rest-management/price-lists https://docs.bigcommerce.com/developer/api-reference/rest/admin/management/price-lists 2026-10-27
+https://support.bigcommerce.com/s/article/Multi-Storefront https://support.bigcommerce.com/s/article/Multi-Storefront?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Supported-Product-Fields https://support.bigcommerce.com/s/article/Supported-Product-Fields?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Importing-Exporting-Customers https://support.bigcommerce.com/s/article/Importing-Exporting-Customers?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/Importing-Exporting-Orders https://support.bigcommerce.com/s/article/Importing-Exporting-Orders?language=en_US 2026-10-27
+https://support.bigcommerce.com/s/article/301-Redirects https://support.bigcommerce.com/s/article/MSF-301-Redirects?language=en_US 2026-10-27

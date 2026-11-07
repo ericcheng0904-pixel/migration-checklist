@@ -1,0 +1,5 @@
+Item Type,Product ID,Product Name,Product Type,Product Code/SKU,Product Description,Price,Cost Price,Retail Price,Sale Price,Product Weight,Allow Purchases?,Product Visible?,Product Availability,Track Inventory,Current Stock Level,Category,Product Image File - 1,Product Image Description - 1,Product Image Is Thumbnail - 1,Product Image Sort - 1,Product URL,Redirect Old URL?
+Product,5101,Nettle Sample Pitcher,P,PITCHER-NETTLE,A practice pitcher from the fictional Sample Harbor Goods catalog.,32.00,12.00,44.00,,0.600,Y,Y,Ships in two sample days,by option,,Harbor/Pitchers,https://cdn.example.test/sample-harbor/nettle-pitcher.jpg,Nettle pitcher front,Y,0,/nettle-sample-pitcher/,N
+SKU,5102,[RB]Size=Small,,PITCHER-S,,32.00,,,,0.520,,,,,6,,,,,,,
+SKU,5103,[RB]Size=Large,,PITCHER-L,,36.00,,,,0.720,,,,,4,,,,,,,
+Rule,5104,,,PITCHER-L,,[FIXED]36,,,,[FIXED]0.720,,,,,,,https://cdn.example.test/sample-harbor/nettle-pitcher-large.jpg,,,,,
