@@ -27,6 +27,11 @@ The Squarespace file uses the 26 columns of the official example (checked
 2026-10-27). It is one product with an option row, one product whose sale
 price is filled while On Sale is No, and one product with Unlimited stock.
 The export article says a real export adds a column for pages and does not name it. Only the move-between-sites tables list GTIN and MPN.
+
+The Wix file uses the 50 columns of the official older-catalog template
+(downloaded 2026-10-29 and again 2026-11-07). It is one product with Variant
+rows, one product with a PERCENT discount, and one product with an AMOUNT
+discount. The new catalog's columns are not in this file.
 """
 
 from __future__ import annotations
@@ -1594,6 +1599,286 @@ def build_squarespace_basic() -> tuple[list[str], list[dict[str, str]], list[str
     )
 
 
+# Header of the official Wix older-catalog template
+# https://manage.wix.com/_api/wix-ecommerce-catalog-sync-web/sync/export/csv/template
+# downloaded 2026-10-29 and again 2026-11-07. 50 columns. The new catalog is
+# not this header.
+WIX_COLUMNS = [
+    "handleId",
+    "fieldType",
+    "name",
+    "description",
+    "productImageUrl",
+    "collection",
+    "sku",
+    "ribbon",
+    "price",
+    "surcharge",
+    "visible",
+    "discountMode",
+    "discountValue",
+    "inventory",
+    "weight",
+    "cost",
+    "productOptionName1",
+    "productOptionType1",
+    "productOptionDescription1",
+    "productOptionName2",
+    "productOptionType2",
+    "productOptionDescription2",
+    "productOptionName3",
+    "productOptionType3",
+    "productOptionDescription3",
+    "productOptionName4",
+    "productOptionType4",
+    "productOptionDescription4",
+    "productOptionName5",
+    "productOptionType5",
+    "productOptionDescription5",
+    "productOptionName6",
+    "productOptionType6",
+    "productOptionDescription6",
+    "additionalInfoTitle1",
+    "additionalInfoDescription1",
+    "additionalInfoTitle2",
+    "additionalInfoDescription2",
+    "additionalInfoTitle3",
+    "additionalInfoDescription3",
+    "additionalInfoTitle4",
+    "additionalInfoDescription4",
+    "additionalInfoTitle5",
+    "additionalInfoDescription5",
+    "additionalInfoTitle6",
+    "additionalInfoDescription6",
+    "customTextField1",
+    "customTextCharLimit1",
+    "customTextMandatory1",
+    "brand",
+]
+
+
+def wix_row(headers: list[str], **fields: str) -> dict[str, str]:
+    row = blank(headers)
+    row.update(fields)
+    return row
+
+
+def wix_shop(
+    headers: list[str],
+    *,
+    handle: str,
+    sku: str,
+    price: str,
+    stock: str,
+    options: list[tuple[str, str]],
+    first: bool,
+    title: str = "",
+    description: str = "",
+    product_type: str = "",
+    tags: str = "",
+    compare: str = "",
+    cost: str = "",
+    image: str = "",
+    position: str = "",
+) -> dict[str, str]:
+    """One Shopify row for the older Wix catalog pair.
+
+    Weight stays blank: the Wix file has a number and no unit.
+    Status active is a practice-file choice. The migration app path is drafts.
+    """
+    row = blank(headers)
+    row["URL handle"] = handle
+    row["SKU"] = sku
+    row["Price"] = price
+    row["Compare-at price"] = compare
+    row["Cost per item"] = cost
+    row["Charge tax"] = "true"
+    row["Requires shipping"] = "true"
+    row["Fulfillment service"] = "manual"
+    row["Inventory tracker"] = "shopify"
+    row["Inventory quantity"] = stock
+    row["Continue selling when out of stock"] = "deny"
+    for index, (name, value) in enumerate(options, start=1):
+        row[f"Option{index} value"] = value
+        if first:
+            row[f"Option{index} name"] = name
+    if first:
+        row["Title"] = title
+        row["Description"] = description
+        row["Vendor"] = VENDOR
+        row["Type"] = product_type
+        row["Tags"] = tags
+        row["Published on online store"] = "true"
+        row["Status"] = "active"
+        row["Gift card"] = "false"
+    if image:
+        row["Product image URL"] = image
+        row["Image position"] = position
+    return row
+
+
+def build_wix_basic() -> tuple[list[str], list[dict[str, str]], list[str], list[dict[str, str]]]:
+    """Three fictional products in the 50-column older-catalog template.
+
+    Kelp Sample Pitcher has a Product row and two Variant rows. The Large
+    variant's surcharge is 4.00, so its Shopify Price is 36.00. A blank
+    surcharge on Small keeps the product price, 32.00. That blank is this
+    file's reading of a missing surcharge. Reed Sample Ladle is PERCENT 15
+    of 24.00, which is 20.40 with no remainder. Cove Sample Cloth is AMOUNT
+    4.50, and this file subtracts that from 28.00. Wix does not state either
+    formula. Weight stays in the Wix file. The unit is not a column, so the
+    Shopify grams cell is blank.
+    """
+    wix_head = list(WIX_COLUMNS)
+    shop_head = list(SHOPIFY_COLUMNS)
+    pitcher_images = f"{image_url('kelp-pitcher.jpg')};{image_url('kelp-pitcher-side.jpg')}"
+    pitcher = wix_row(
+        wix_head,
+        handleId="kelp-sample-pitcher",
+        fieldType="Product",
+        name="Kelp Sample Pitcher",
+        description="A practice pitcher from the fictional Sample Harbor Goods catalog.",
+        productImageUrl=pitcher_images,
+        collection="Pitchers",
+        sku="PITCHER-KELP",
+        price="32.00",
+        visible="TRUE",
+        weight="0.600",
+        cost="9.00",
+        productOptionName1="Size",
+        productOptionType1="DROP_DOWN",
+        productOptionDescription1="Small;Large",
+        brand=VENDOR,
+    )
+    pitcher_small = wix_row(
+        wix_head,
+        handleId="kelp-sample-pitcher",
+        fieldType="Variant",
+        sku="PITCHER-S",
+        visible="TRUE",
+        inventory="6",
+        weight="0.520",
+        productOptionDescription1="Small",
+    )
+    pitcher_large = wix_row(
+        wix_head,
+        handleId="kelp-sample-pitcher",
+        fieldType="Variant",
+        sku="PITCHER-L",
+        surcharge="4.00",
+        visible="TRUE",
+        inventory="4",
+        weight="0.720",
+        productOptionDescription1="Large",
+    )
+    ladle = wix_row(
+        wix_head,
+        handleId="reed-sample-ladle",
+        fieldType="Product",
+        name="Reed Sample Ladle",
+        description="A practice ladle from the fictional Sample Harbor Goods catalog.",
+        productImageUrl=image_url("reed-ladle.jpg"),
+        collection="Ladles",
+        sku="LADLE-REED",
+        price="24.00",
+        visible="TRUE",
+        discountMode="PERCENT",
+        discountValue="15",
+        inventory="5",
+        weight="0.250",
+        cost="6.00",
+        brand=VENDOR,
+    )
+    cloth = wix_row(
+        wix_head,
+        handleId="cove-sample-cloth",
+        fieldType="Product",
+        name="Cove Sample Cloth",
+        description="A practice cloth from the fictional Sample Harbor Goods catalog.",
+        productImageUrl=image_url("cove-cloth.jpg"),
+        collection="Cloths",
+        sku="CLOTH-COVE",
+        price="28.00",
+        visible="TRUE",
+        discountMode="AMOUNT",
+        discountValue="4.50",
+        inventory="8",
+        weight="0.180",
+        cost="7.00",
+        brand=VENDOR,
+    )
+    shop_small = wix_shop(
+        shop_head,
+        handle="kelp-sample-pitcher",
+        title="Kelp Sample Pitcher",
+        description="A practice pitcher from the fictional Sample Harbor Goods catalog.",
+        product_type="Pitchers",
+        tags="practice",
+        sku="PITCHER-S",
+        price="32.00",
+        cost="9.00",
+        stock="6",
+        options=[("Size", "Small")],
+        first=True,
+        image=image_url("kelp-pitcher.jpg"),
+        position="1",
+    )
+    shop_large = wix_shop(
+        shop_head,
+        handle="kelp-sample-pitcher",
+        sku="PITCHER-L",
+        price="36.00",
+        cost="9.00",
+        stock="4",
+        options=[("Size", "Large")],
+        first=False,
+    )
+    shop_side = blank(shop_head)
+    shop_side["URL handle"] = "kelp-sample-pitcher"
+    shop_side["Product image URL"] = image_url("kelp-pitcher-side.jpg")
+    shop_side["Image position"] = "2"
+    shop_ladle = wix_shop(
+        shop_head,
+        handle="reed-sample-ladle",
+        title="Reed Sample Ladle",
+        description="A practice ladle from the fictional Sample Harbor Goods catalog.",
+        product_type="Ladles",
+        tags="practice",
+        sku="LADLE-REED",
+        price="20.40",
+        compare="24.00",
+        cost="6.00",
+        stock="5",
+        options=[("Default Title", "Default Title")],
+        first=True,
+        image=image_url("reed-ladle.jpg"),
+        position="1",
+    )
+    shop_cloth = wix_shop(
+        shop_head,
+        handle="cove-sample-cloth",
+        title="Cove Sample Cloth",
+        description="A practice cloth from the fictional Sample Harbor Goods catalog.",
+        product_type="Cloths",
+        tags="practice",
+        sku="CLOTH-COVE",
+        price="23.50",
+        compare="28.00",
+        cost="7.00",
+        stock="8",
+        options=[("Default Title", "Default Title")],
+        first=True,
+        image=image_url("cove-cloth.jpg"),
+        position="1",
+    )
+    return (
+        wix_head,
+        [pitcher, pitcher_small, pitcher_large, ladle, cloth],
+        shop_head,
+        [shop_small, shop_large, shop_side, shop_ladle, shop_cloth],
+    )
+
+
 def main() -> None:
     catalogs = {
         "small-clean": build_small_clean(),
@@ -1615,6 +1900,10 @@ def main() -> None:
     sq_head, sq_rows, shop_head, shop_rows = build_squarespace_basic()
     folder = OUT / "squarespace-basic"
     write_csv(folder / "squarespace.csv", sq_head, sq_rows)
+    write_csv(folder / "shopify.csv", shop_head, shop_rows)
+    wix_head, wix_rows, shop_head, shop_rows = build_wix_basic()
+    folder = OUT / "wix-basic"
+    write_csv(folder / "wix.csv", wix_head, wix_rows)
     write_csv(folder / "shopify.csv", shop_head, shop_rows)
 
 

@@ -68,7 +68,7 @@ def grams(kilograms: str) -> str:
 class RegenerationTests(unittest.TestCase):
     def test_script_regenerates_csvs_byte_for_byte(self) -> None:
         paths = sorted(CATALOGS.glob("*/*.csv"))
-        self.assertEqual(len(paths), 12)
+        self.assertEqual(len(paths), 14)
         before = {path: path.read_bytes() for path in paths}
         subprocess.run(
             [sys.executable, str(ROOT / "scripts" / "make-test-catalogs.py")],
@@ -694,6 +694,193 @@ class SquarespaceBasicTests(unittest.TestCase):
         self.assertEqual(side["SKU"], "")
         self.assertEqual(side["Image position"], "2")
         self.assertEqual(side["Image alt text"], "")
+
+
+class WixBasicTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.wix_headers, self.wix = load(CATALOGS / "wix-basic" / "wix.csv")
+        self.shop_headers, self.shop = load(CATALOGS / "wix-basic" / "shopify.csv")
+        self.by_sku = {row["sku"]: row for row in self.wix if row["sku"]}
+        self.shop_skus = shop_by_sku(self.shop)
+
+    def test_readme_describes_the_pair(self) -> None:
+        text = README.read_text(encoding="utf-8")
+        for token in (
+            "wix-basic",
+            "PITCHER-S",
+            "PITCHER-L",
+            "PITCHER-KELP",
+            "LADLE-REED",
+            "CLOTH-COVE",
+            "Kelp Sample Pitcher",
+            "kelp-sample-pitcher",
+            "percent-rounding-not-in-the-docs",
+            "amount-subtraction-is-this-files-choice",
+            "handleId",
+            "fieldType",
+            "productImageUrl",
+            "discountMode",
+            "surcharge",
+            "Check in your own export",
+            "Default Title",
+            "PERCENT",
+            "AMOUNT",
+        ):
+            self.assertIn(token, text)
+
+    def test_rows_follow_the_template_shape(self) -> None:
+        self.assertEqual(
+            self.wix_headers,
+            [
+                "handleId",
+                "fieldType",
+                "name",
+                "description",
+                "productImageUrl",
+                "collection",
+                "sku",
+                "ribbon",
+                "price",
+                "surcharge",
+                "visible",
+                "discountMode",
+                "discountValue",
+                "inventory",
+                "weight",
+                "cost",
+                "productOptionName1",
+                "productOptionType1",
+                "productOptionDescription1",
+                "productOptionName2",
+                "productOptionType2",
+                "productOptionDescription2",
+                "productOptionName3",
+                "productOptionType3",
+                "productOptionDescription3",
+                "productOptionName4",
+                "productOptionType4",
+                "productOptionDescription4",
+                "productOptionName5",
+                "productOptionType5",
+                "productOptionDescription5",
+                "productOptionName6",
+                "productOptionType6",
+                "productOptionDescription6",
+                "additionalInfoTitle1",
+                "additionalInfoDescription1",
+                "additionalInfoTitle2",
+                "additionalInfoDescription2",
+                "additionalInfoTitle3",
+                "additionalInfoDescription3",
+                "additionalInfoTitle4",
+                "additionalInfoDescription4",
+                "additionalInfoTitle5",
+                "additionalInfoDescription5",
+                "additionalInfoTitle6",
+                "additionalInfoDescription6",
+                "customTextField1",
+                "customTextCharLimit1",
+                "customTextMandatory1",
+                "brand",
+            ],
+        )
+        self.assertNotIn("categorySlugs", self.wix_headers)
+        self.assertNotIn("optionChoices", self.wix_headers)
+        product = self.by_sku["PITCHER-KELP"]
+        small = self.by_sku["PITCHER-S"]
+        large = self.by_sku["PITCHER-L"]
+        self.assertEqual(product["fieldType"], "Product")
+        self.assertEqual(small["fieldType"], "Variant")
+        self.assertEqual(large["fieldType"], "Variant")
+        self.assertEqual(product["handleId"], "kelp-sample-pitcher")
+        self.assertEqual(small["handleId"], "kelp-sample-pitcher")
+        self.assertEqual(large["handleId"], "kelp-sample-pitcher")
+        self.assertEqual(small["name"], "")
+        self.assertEqual(small["price"], "")
+        self.assertEqual(large["price"], "")
+        self.assertEqual(product["price"], "32.00")
+        self.assertEqual(small["surcharge"], "")
+        self.assertEqual(large["surcharge"], "4.00")
+        self.assertEqual(product["productOptionName1"], "Size")
+        self.assertEqual(product["productOptionType1"], "DROP_DOWN")
+        self.assertEqual(product["productOptionDescription1"], "Small;Large")
+        self.assertEqual(small["productOptionDescription1"], "Small")
+        self.assertEqual(large["productOptionDescription1"], "Large")
+        self.assertNotIn(" ", product["productImageUrl"])
+        self.assertIn(";", product["productImageUrl"])
+        self.assertEqual(small["productImageUrl"], "")
+        self.assertEqual(product["visible"], "TRUE")
+        self.assertEqual(product["brand"], "Sample Harbor Goods")
+        self.assertEqual(small["brand"], "")
+        self.assertEqual(product["collection"], "Pitchers")
+        ladle = self.by_sku["LADLE-REED"]
+        cloth = self.by_sku["CLOTH-COVE"]
+        self.assertEqual(ladle["fieldType"], "Product")
+        self.assertEqual(ladle["discountMode"], "PERCENT")
+        self.assertEqual(ladle["discountValue"], "15")
+        self.assertEqual(ladle["price"], "24.00")
+        self.assertEqual(cloth["discountMode"], "AMOUNT")
+        self.assertEqual(cloth["discountValue"], "4.50")
+        self.assertEqual(cloth["price"], "28.00")
+        self.assertEqual(set(self.by_sku), {"PITCHER-KELP", "PITCHER-S", "PITCHER-L", "LADLE-REED", "CLOTH-COVE"})
+
+    def test_shopify_mapping_keeps_surcharge_discounts_and_images(self) -> None:
+        self.assertEqual(set(self.shop_skus), {"PITCHER-S", "PITCHER-L", "LADLE-REED", "CLOTH-COVE"})
+        self.assertNotIn("PITCHER-KELP", self.shop_skus)
+        small = self.shop_skus["PITCHER-S"]
+        large = self.shop_skus["PITCHER-L"]
+        ladle = self.shop_skus["LADLE-REED"]
+        cloth = self.shop_skus["CLOTH-COVE"]
+        self.assertEqual(small["Title"], "Kelp Sample Pitcher")
+        self.assertEqual(small["URL handle"], "kelp-sample-pitcher")
+        self.assertEqual(large["URL handle"], "kelp-sample-pitcher")
+        self.assertEqual(small["Price"], "32.00")
+        self.assertEqual(small["Compare-at price"], "")
+        self.assertEqual(large["Price"], "36.00")
+        self.assertEqual(large["Compare-at price"], "")
+        self.assertEqual(large["Option1 name"], "")
+        self.assertEqual(large["Option1 value"], "Large")
+        self.assertEqual(small["Option1 name"], "Size")
+        self.assertEqual(small["Option1 value"], "Small")
+        self.assertEqual(small["Inventory tracker"], "shopify")
+        self.assertEqual(small["Inventory quantity"], "6")
+        self.assertEqual(large["Inventory quantity"], "4")
+        self.assertEqual(small["Continue selling when out of stock"], "deny")
+        self.assertEqual(small["Cost per item"], "9.00")
+        self.assertEqual(large["Cost per item"], "9.00")
+        self.assertEqual(ladle["Price"], "20.40")
+        self.assertEqual(ladle["Compare-at price"], "24.00")
+        self.assertEqual(ladle["Option1 name"], "Default Title")
+        self.assertEqual(ladle["Option1 value"], "Default Title")
+        self.assertEqual(cloth["Price"], "23.50")
+        self.assertEqual(cloth["Compare-at price"], "28.00")
+        self.assertEqual(cloth["Inventory quantity"], "8")
+        self.assertEqual(small["Weight value (grams)"], "")
+        self.assertEqual(large["Weight value (grams)"], "")
+        self.assertEqual(ladle["Weight value (grams)"], "")
+        self.assertEqual(small["Weight unit for display"], "")
+        self.assertEqual(small["Status"], "active")
+        self.assertEqual(small["Published on online store"], "true")
+        self.assertEqual(small["Vendor"], "Sample Harbor Goods")
+        self.assertEqual(small["Type"], "Pitchers")
+        self.assertEqual(small["Tags"], "practice")
+        self.assertNotIn("Collection", self.shop_headers)
+        images = [
+            row["Product image URL"]
+            for row in self.shop
+            if row["URL handle"] == "kelp-sample-pitcher" and row["Product image URL"]
+        ]
+        self.assertEqual(
+            images,
+            [
+                "https://cdn.example.test/sample-harbor/kelp-pitcher.jpg",
+                "https://cdn.example.test/sample-harbor/kelp-pitcher-side.jpg",
+            ],
+        )
+        side = next(row for row in self.shop if row["Product image URL"].endswith("kelp-pitcher-side.jpg"))
+        self.assertEqual(side["SKU"], "")
+        self.assertEqual(side["Image position"], "2")
+        self.assertEqual(side["Title"], "")
 
 
 if __name__ == "__main__":

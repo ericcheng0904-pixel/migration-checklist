@@ -2,7 +2,7 @@
 
 Copy this file into your tracker and tick items per phase. Each line is one check. "Why it bites" is the failure that shows up after launch if you skip it.
 
-This project is independent and is not affiliated with Shopify or WooCommerce. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace.
+This project is independent and is not affiliated with Shopify or WooCommerce. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace. It is not affiliated with Wix.
 
 ## Before you start
 

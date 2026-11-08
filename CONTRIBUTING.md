@@ -2,9 +2,9 @@
 
 Corrections are welcome. Open a pull request.
 
-If you change a factual claim about Shopify, WooCommerce, Magento, BigCommerce, or Squarespace, link the official page you checked and write the date in [SOURCES.md](SOURCES.md). If the docs disagree, or you are not sure, say to check the current docs rather than guess.
+If you change a factual claim about Shopify, WooCommerce, Magento, BigCommerce, Squarespace, or Wix, link the official page you checked and write the date in [SOURCES.md](SOURCES.md). If the docs disagree, or you are not sure, say to check the current docs rather than guess.
 
-Do not add real stores, brands, people, affiliate links, or tracking. Examples stay fictional. This project is independent and is not affiliated with Shopify or WooCommerce. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace.
+Do not add real stores, brands, people, affiliate links, or tracking. Examples stay fictional. This project is independent and is not affiliated with Shopify or WooCommerce. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace. It is not affiliated with Wix.
 
 From the repository root:
 

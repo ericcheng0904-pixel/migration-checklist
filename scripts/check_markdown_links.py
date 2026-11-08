@@ -245,7 +245,10 @@ def _curl_once(url: str) -> FetchResult:
                 "-A",
                 UA,
                 "-H",
-                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,text/csv;q=0.8,*/*;q=0.7",
+                # text/csv is first so the Wix product template, which is a
+                # file download, returns the CSV. Preferring text/html makes
+                # that URL answer 302 to a sign-in page.
+                "Accept: text/csv,text/html;q=0.9,application/xhtml+xml;q=0.8,application/xml;q=0.8,*/*;q=0.7",
                 "-H",
                 "Accept-Language: en-US,en;q=0.9",
                 "-H",

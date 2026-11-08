@@ -297,6 +297,9 @@ class LinkCheckerTests(unittest.TestCase):
 
     def test_curl_fetch_flags_a_challenge_from_a_synthetic_curl_response(self) -> None:
         def fake_curl(cmd: list[str], **_kwargs: object) -> subprocess.CompletedProcess[bytes]:
+            accepts = [cmd[i + 1] for i, part in enumerate(cmd) if part == "-H" and cmd[i + 1].startswith("Accept:")]
+            self.assertEqual(len(accepts), 1)
+            self.assertLess(accepts[0].find("text/csv"), accepts[0].find("text/html"))
             Path(cmd[cmd.index("-D") + 1]).write_text("HTTP/2 403 \r\ncontent-type: text/html\r\n\r\n")
             Path(cmd[cmd.index("-o") + 1]).write_text(
                 "<html><head><title>Just a moment...</title></head><body>cf-chl</body></html>"

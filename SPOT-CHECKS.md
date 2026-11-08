@@ -92,3 +92,9 @@ On this pair the product has SKU rows, so the SKU rows are `PITCHER-S` and `PITC
 `test-catalogs/squarespace-basic/` is a Squarespace product export (`squarespace.csv`), not a WooCommerce file. Count every product row and option row, including the first product row of a product that has option rows. On the Shopify sheet, count rows that carry variant details, and skip rows that carry only a handle and an image URL.
 
 On this pair the SKUs are `JAR-S`, `JAR-L`, `LADLE-FERN`, and `CLOTH-MIST`. All four are in the Shopify file. The jar's second image row has no SKU and is not a variant. [SQUARESPACE.md](SQUARESPACE.md) is the checklist for a real export.
+
+## Wix
+
+`test-catalogs/wix-basic/` is an older Wix Stores catalog export (`wix.csv`), not a WooCommerce file. Count `fieldType` `Variant` rows as the variants. Count a `Product` row only when that product has no options and no `Variant` rows. A `Product` row with options but no `Variant` rows is one variant per option value. Do not count a `Product` row that has `Variant` rows, and do not count by `sku`. On the Shopify sheet, count rows that carry variant details, and skip rows that carry only a handle and an image URL.
+
+On this pair the Variant SKUs are `PITCHER-S` and `PITCHER-L`. `LADLE-REED` and `CLOTH-COVE` are Product rows with no options and no Variant rows, so each is one variant. This file has no Product row that has options without Variant rows. All four are in the Shopify file. `PITCHER-KELP` is the pitcher's Product row SKU and is not a Shopify SKU. The pitcher's second image row has no SKU and is not a variant. [WIX.md](WIX.md) is the checklist for a real export.

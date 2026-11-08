@@ -6,7 +6,7 @@ Practise on [test-catalogs/squarespace-basic](test-catalogs/squarespace-basic). 
 
 Licence: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
-This project is independent and is not affiliated with Shopify or WooCommerce. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace. Those names are used only to describe the platforms.
+This project is independent and is not affiliated with Shopify or WooCommerce. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace. It is not affiliated with Wix. Those names are used only to describe the platforms.
 
 Where two pages disagree, the disagreement is stated once, in a note or in the item for that topic. Where the docs do not settle a cell, the line says to check in your own export.
 

@@ -33,3 +33,5 @@ https://support.bigcommerce.com/s/article/Supported-Product-Fields https://suppo
 https://support.bigcommerce.com/s/article/Importing-Exporting-Customers https://support.bigcommerce.com/s/article/Importing-Exporting-Customers?language=en_US 2026-10-27
 https://support.bigcommerce.com/s/article/Importing-Exporting-Orders https://support.bigcommerce.com/s/article/Importing-Exporting-Orders?language=en_US 2026-10-27
 https://support.bigcommerce.com/s/article/301-Redirects https://support.bigcommerce.com/s/article/MSF-301-Redirects?language=en_US 2026-10-27
+# Checked 2026-11-07. The product details page now answers at product-status.
+https://help.shopify.com/en/manual/products/details/product-details-page https://help.shopify.com/en/manual/products/product-status 2026-11-07
