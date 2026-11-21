@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wix to Shopify migration checklist (printable)</title>
+<meta name="description" content="A printable page of the Wix to Shopify catalog checklist. Open it in a browser, tick the items, then print or save the page as a PDF.">
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+html { background: #fff; }
+body {
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2.5rem;
+  max-width: 40rem;
+  color: #111;
+  background: #fff;
+  font: 1.05rem/1.5 Georgia, "Iowan Old Style", Palatino, "Palatino Linotype", serif;
+  overflow-wrap: anywhere;
+}
+main, footer { max-width: 100%; }
+h1 { font-size: 1.55rem; line-height: 1.25; margin: 0 0 1rem; }
+h2 {
+  font-size: 1.2rem;
+  line-height: 1.3;
+  margin: 1.75rem 0 0.6rem;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+p { margin: 0.65rem 0; }
+a { color: inherit; text-decoration: underline; text-underline-offset: 0.12em; }
+ul, ol { margin: 0.6rem 0; padding-left: 1.3rem; }
+li { margin: 0.35rem 0; }
+ul.checks { list-style: none; padding-left: 0; margin-left: 0; }
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
+  list-style: none;
+  margin: 0.55rem 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.box {
+  flex: 0 0 auto;
+  width: 0.85em;
+  height: 0.85em;
+  margin-top: 0.28em;
+  border: 1px solid #000;
+}
+.check-text { min-width: 0; }
+blockquote {
+  margin: 1rem 0;
+  padding: 0 0 0 0.9rem;
+  border-left: 3px solid #000;
+}
+blockquote p { margin: 0.4rem 0; }
+pre, code {
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+}
+code { font-size: 0.92em; }
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-x: auto;
+  max-width: 100%;
+  margin: 0.8rem 0;
+  padding: 0.75rem 0.8rem;
+  border: 1px solid #bbb;
+}
+pre code { font-size: 0.82rem; }
+footer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #000;
+  font-size: 0.95rem;
+}
+footer ul { padding-left: 1.2rem; }
+@page { margin: 16mm; }
+@media print {
+  html, body { color: #000; background: #fff; }
+  body { padding: 0; max-width: none; }
+  a { color: #000; text-decoration: underline; }
+  .box { border-color: #000; }
+  .nav { display: none; }
+  a[href^="https://"]::after,
+  a[href^="http://"]::after {
+    content: " (" attr(href) ")";
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+}
+</style>
+</head>
+<body>
+<main>
+<p class="nav"><a href="index.html">All printable checklists</a></p>
+<h1>Wix to Shopify catalog checklist</h1>
+<p>A checklist for a small catalog moving from Wix Stores to Shopify. It follows the same phases as <a href="woocommerce-to-shopify.html">CHECKLIST.md</a>. Wix documents two catalogs. This file covers the older catalog's CSV in full, because that is the format with an official template. For the new catalog it says only what Wix's pages settle, and it says to check in your own export for the rest.</p>
+<p>This project is independent and is not affiliated with Shopify or WooCommerce. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace. It is not affiliated with Wix. Those names are used only to describe the platforms.</p>
+<h2>Before you start</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Work out which catalog the store is on before you choose an export. Why it bites: the introducing page's features are "available with the new Wix Stores product catalog", and a store that does not show them may not have been migrated yet. If the first field on the product creation page is Images and videos, the new-catalog CSV pages say you are on the previous version. <a href="https://support.wix.com/en/article/introducing-the-new-wix-stores-product-catalog">Introducing the new catalog</a> <a href="https://support.wix.com/en/article/wix-stores-exporting-and-importing-your-products">Exporting and importing</a> <a href="https://support.wix.com/en/article/wix-stores-importing-products-from-another-ecommerce-platform">Importing from another platform</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">On the older catalog, export from the Product tab (More Actions, Export) or from Store Products, More Actions, Import, Download CSV File, Wix CSV with your products. Why it bites: "Exporting digital products is not currently supported." Digital products have their own request page. The export page does not say which catalog it covers, so confirm with the Images and videos check above. The row cap is the note below. <a href="https://support.wix.com/en/article/wix-stores-exporting-your-product-list">Exporting products</a> <a href="https://support.wix.com/en/article/wix-stores-editing-multiple-products-at-the-same-time">Editing multiple products</a> <a href="https://support.wix.com/en/article/wix-stores-request-importing-or-exporting-digital-products">Digital products</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">On the new catalog, export from Store Products, More Actions, Import, Export Products. Why it bites: that page's import FAQ gives two limits, "15mb of data" and 10k rows, and says only the first 10K rows are imported when there are more. It does not state an export row cap, and it says importing digital products is not supported. Check in your own export for the column names. <a href="https://support.wix.com/en/article/wix-stores-exporting-and-importing-your-products">Exporting and importing</a></span></li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> The export page says "You can export up to 5,000 rows per CSV file." The older import FAQ says "You can import up to 5,000 rows per CSV file." The bulk-editing page says "You can export up to 5,000 products." The export page does not say which catalog those rows belong to. The new catalog's 15mb and 10k-row import limits are a different article. <a href="https://support.wix.com/en/article/wix-stores-exporting-your-product-list">Exporting products</a> <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a> <a href="https://support.wix.com/en/article/wix-stores-editing-multiple-products-at-the-same-time">Editing multiple products</a></p>
+</blockquote>
+<blockquote>
+<p><strong>Note:</strong> The older template header, character for character, is <code>handleId,fieldType,name,description,productImageUrl,collection,sku,ribbon,price,surcharge,visible,discountMode,discountValue,inventory,weight,cost,productOptionName1,productOptionType1,productOptionDescription1,productOptionName2,productOptionType2,productOptionDescription2,productOptionName3,productOptionType3,productOptionDescription3,productOptionName4,productOptionType4,productOptionDescription4,productOptionName5,productOptionType5,productOptionDescription5,productOptionName6,productOptionType6,productOptionDescription6,additionalInfoTitle1,additionalInfoDescription1,additionalInfoTitle2,additionalInfoDescription2,additionalInfoTitle3,additionalInfoDescription3,additionalInfoTitle4,additionalInfoDescription4,additionalInfoTitle5,additionalInfoDescription5,additionalInfoTitle6,additionalInfoDescription6,customTextField1,customTextCharLimit1,customTextMandatory1,brand</code>. <a href="https://manage.wix.com/_api/wix-ecommerce-catalog-sync-web/sync/export/csv/template">Wix product CSV template</a></p>
+</blockquote>
+<h2>Product data</h2>
+<blockquote>
+<p><strong>Note:</strong> The new catalog's overview says some columns are only relevant for media, "e.g. columns F and G". The page's field table lists categorySlugs and primaryCategorySlug before media, so by the table's order F and G would be the category columns. The page's CSV screenshot is a third source and is not reconciled with those two. Wix's pages do not settle the column order, so this file does not list the new catalog's columns. Check in your own export. <a href="https://support.wix.com/en/article/wix-stores-exporting-and-importing-your-products">Exporting and importing</a></p>
+</blockquote>
+<blockquote>
+<p><strong>Note:</strong> The older import table says discountMode must be AMOUNT or PERCENT and is case sensitive. The error page's message says Must be either "Amount" or "Percent", its fix says enter "AMOUNT" or "PERCENT" in caps, and another error says discountMode is "percent". <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a> <a href="https://support.wix.com/en/article/wix-stores-product-import-error-messages">Import error messages</a></p>
+</blockquote>
+<blockquote>
+<p><strong>Note:</strong> The older import table says inventory must be InStock, OutOfStock, or a number, and a blank is marked InStock. The error message says Must be either "in_stock", "out_of_stock", or a number, and the fix says enter InStock or OutOfStock when you do not track inventory. The new catalog's import table uses IN_STOCK and OUT_OF_STOCK and says a blank is marked OUT_OF_STOCK. <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a> <a href="https://support.wix.com/en/article/wix-stores-product-import-error-messages">Import error messages</a> <a href="https://support.wix.com/en/article/wix-stores-exporting-and-importing-your-products">Exporting and importing</a></p>
+</blockquote>
+<blockquote>
+<p><strong>Note:</strong> The older import table says productOptionType must be COLOR or DROP_DOWN and is case sensitive, and the same cell says to choose Color or "drop-down" for everything else. The error page says "Max 1000 variants per product". <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a> <a href="https://support.wix.com/en/article/wix-stores-product-import-error-messages">Import error messages</a></p>
+</blockquote>
+<blockquote>
+<p><strong>Note:</strong> The older import table says a variant must have optionChoices. That word is not a column in the template header. The header's choice columns are productOptionDescription1 through productOptionDescription6. The table also says a maximum of 2 custom text fields, while the template header has customTextField1, customTextCharLimit1, and customTextMandatory1. brand is in the header and is not in that field table. <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a> <a href="https://manage.wix.com/_api/wix-ecommerce-catalog-sync-web/sync/export/csv/template">Wix product CSV template</a></p>
+</blockquote>
+<blockquote>
+<p><strong>Note:</strong> The importing table's productImageUrl row says images are separated by a semicolon and "Do not add a space after semicolons." The productOptionDescription row says only "separated by a semicolon". The error page writes product-row choices with spaces (<code>small; medium; large</code>) and variant rows without (<code>small;blue</code>). Check in your own export whether spaces appear. <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a> <a href="https://support.wix.com/en/article/wix-stores-product-import-error-messages">Import error messages</a></p>
+</blockquote>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Combine each Product row with its first Variant row, keep the other Variant rows, and treat a Product row with no options and no Variant rows as one variant. Why it bites: "If a Wix product has options but no Variant rows, then create a row for each option value." The Product row's sku is not a second variant when Variant rows exist. On test-catalogs/wix-basic the variant SKUs are PITCHER-S and PITCHER-L. PITCHER-KELP stays on the Product row. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Do not add, delete, or rename columns in the older file. Why it bites: "Do not add or delete columns." Do not edit column names. The bulk-editing page says deleting or adding columns will break the file. Each product needs handleId, name, fieldType, and price. fieldType must be Product or Variant, and Variant rows share the product's handleId. <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a> <a href="https://support.wix.com/en/article/wix-stores-editing-multiple-products-at-the-same-time">Editing multiple products</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Keep only three Shopify options, and check columns 4 through 6 in your own export. Why it bites: the template header has productOptionName1 through productOptionName6, and the import table says "Maximum 6 option names." Shopify's guide says a maximum of 3 options and to remove option columns 4 to 6. Shopify's guide also says to remove productOptionType1 to productOptionType6, and to change color values such as #000000:Black to Black. Its Store Migration app imports a product with 4 or more options as a single product without any of its options or variants. <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Put the amount the customer pays in Price, and the price before the discount in Compare-at price. Why it bites: Shopify's guide says a variant's price is the product "price plus the variant's surcharge." For a discount, put the original price in Compare-at price and the discounted price in Price. Wix's pages do not say how a percentage discount is rounded. An amount must be less than the product price. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a> <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a> <a href="https://help.shopify.com/en/manual/products/details/product-pricing/sale-pricing">Sale prices</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Keep Compare-at price higher than Price when the row should show a sale. Why it bites: "higher than the value in the Price field to display the sale price." Only the sale price is displayed at checkout, and the theme controls whether and where a sale shows. <a href="https://help.shopify.com/en/manual/products/details/product-pricing/sale-pricing">Sale prices</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Copy a numeric inventory into Inventory quantity, and replace the stock words with a number you choose. Why it bites: Shopify's guide says Wix can use InStock or OutOfStock instead of a number, and to replace them with the quantity you have. The letter case is the note above. A blank marked InStock is an import rule, not a description of what the export writes. Check in your own export. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a> <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Set Published on online store from visible, and set Status on purpose. Why it bites: visible must be TRUE or FALSE and is case sensitive, and a blank on import is marked TRUE. Shopify's CSV mapping says change TRUE to true and FALSE to false. The Store Migration app is a different import: "Imported products are added to your store as drafts." The CSV path does not say what Status becomes. <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Split productImageUrl on semicolons into one Product image URL per row. Why it bites: "Do not add a space after semicolons." The older table allows 15 images or GIFs, as a URL, in .jpg, png, or gif. The introducing page says the new catalog's maximum rose from 15 to 50. Shopify downloads the images during import, so import before the old store is closed. <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a> <a href="https://support.wix.com/en/article/introducing-the-new-wix-stores-product-catalog">Introducing the new catalog</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Leave weight as a number until you know the unit, then enter whole grams. Why it bites: the older table allows 9 digits and 3 after the decimal, and it does not name a unit. Shopify's guide says to round to a whole number, multiply by 1000 for kilograms, and multiply by 453.592 for pounds. Check in your own export. <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Copy cost into Cost per item, and copy brand into Vendor only when you mean that name as the vendor. Why it bites: Shopify's guide maps cost to Cost per item and brand to Vendor. brand is in the template header and is not in the importing field table. Check in your own export whether brand is filled. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a> <a href="https://manage.wix.com/_api/wix-ecommerce-catalog-sync-web/sync/export/csv/template">Wix product CSV template</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Keep one collection name for the product CSV. Why it bites: Shopify's guide maps collection to Collection, and Wix separates several collections with semicolons, but the product CSV can add a product to only one collection. Add the others after import. The sample template header has no Collection column, so test-catalogs/wix-basic puts the one name in Type. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Do not look for a slug column. Build the old path from the live page. Why it bites: the template header has no slug. The default product address (SEO Settings, URL structure) is https://domain.com/product-page/{product slug}. Wix's importing page calls handleId "A unique label used to identify the product", and the SEO page does not say it is the slug. Shopify's guide maps handleId to URL handle and says to keep only letters, dashes and numbers, with no spaces, accents or periods. <a href="https://support.wix.com/en/article/customizing-your-pages-url-structure-in-seo-settings">SEO settings</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a> <a href="https://manage.wix.com/_api/wix-ecommerce-catalog-sync-web/sync/export/csv/template">Wix product CSV template</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Leave customers, orders, reviews, ribbons, and additional info sections out of the product CSV, or fold additional info into Description on purpose. Why it bites: Shopify's product-column table maps no contact, order or review data; the guide says reviews cannot be exported from Wix. It also says to remove ribbon, customTextField, and the additionalInfoTitle and additionalInfoDescription columns. To keep an info section, add its content to Description. The product file is not the contacts export or the orders export. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a></span></li>
+</ul>
+<h2>Customers and orders</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Export contacts from Contacts, not from the product file, and only as the site owner. Why it bites: "only the site owner can export contacts", up to 50,000 at a time, from Import / Export, as a Regular CSV, a Google CSV, or an Outlook CSV. Shopify's guide says to choose the regular CSV file format. <a href="https://support.wix.com/en/article/wix-contacts-exporting-your-contacts">Exporting contacts</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Import customers only after the headings match Shopify's customer CSV. Why it bites: "You can't import a customer CSV that doesn't match the Shopify headings." That import has no data mapping support. The customer CSV page says passwords cannot be migrated with that file, and that Total Spent and Total Orders aren't imported. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a> <a href="https://help.shopify.com/en/manual/customers/import-export-customers">Importing customers</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Export orders from the Orders tab, and keep the time zone and the row shape. Why it bites: the page is relevant for Wix Stores, and the time of purchase "is always given in Coordinated Universal Time (UTC)." Item purchased is one row per item, and Orders is one row per order. You can deselect columns. Order history is not in the product CSV. Shopify's guide names third-party migration apps for order history and describes no order CSV import. <a href="https://support.wix.com/en/article/exporting-orders-3126323">Exporting orders</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a></span></li>
+</ul>
+<h2>Content</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Do not expect the product CSV to carry pages or reviews. Why it bites: Shopify's guide says "You can't export or migrate reviews from Wix to Shopify." The product mapping table has no review column and no page column. The guide's website step is about themes, not a page file. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a></span></li>
+</ul>
+<h2>SEO</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Save the live product path, not the handleId, and add a Shopify redirect for each one. Why it bites: the default Wix path is <code>/product-page/{product slug}</code> and the Shopify path is <code>/products/{url handle}</code>. You can redirect only from broken URLs. You cannot redirect from prefixes such as /apps, /cart, /orders, or /shop, or from /products, /collections, and /collections/all. A store can have 100,000 redirects, or 20,000,000 on Plus. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a> <a href="https://help.shopify.com/en/manual/online-store/menus-and-links/url-redirect">URL redirects</a> <a href="https://support.wix.com/en/article/customizing-your-pages-url-structure-in-seo-settings">SEO settings</a></span></li>
+</ul>
+<h2>Launch day</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Spot-check one surcharge, one PERCENT discount, one AMOUNT discount, and one visible value. Why it bites: a blank surcharge is not a discount, a percentage is not an amount, and visible is case sensitive. The Store Migration app adds products as drafts, which is a different import from the CSV path. On test-catalogs/wix-basic, Large is the surcharge, Reed Sample Ladle is PERCENT, and Cove Sample Cloth is AMOUNT. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a> <a href="https://support.wix.com/en/article/wix-stores-importing-products-to-wix-stores">Importing products</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Place the test orders the migration guide lists, then refund, cancel, fulfill, and archive. Why it bites: the guide says to place a successful and a failed transaction, refund and cancel an order, fulfill or partially fulfill an order, and archive a successful order, "to make sure that everything is working." <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-wix">Migrate from Wix</a></span></li>
+</ul>
+<h2>The first week</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Recount variants, and recount the old product paths. Why it bites: on the Wix sheet, count fieldType Variant rows, and count a Product row only when it has no options and no Variant rows. A Product row with options but no Variant rows is one variant per option value. Do not count a Product row that has Variant rows, and do not count by sku. On the Shopify sheet, skip a row that repeats the handle only to add an image. Open each saved /product-page/ path and confirm the matching /products/ path. <a href="wix-to-shopify.html">WIX.md</a> <a href="https://help.shopify.com/en/manual/online-store/menus-and-links/url-redirect">URL redirects</a></span></li>
+</ul>
+<h2>Practise first</h2>
+<p>test-catalogs/wix-basic/ is one fictional older-catalog export and the Shopify file it became. The hazards in that file are labelled in test-catalogs/README.md.</p>
+<p>Text is available under the CC BY 4.0 licence.</p>
+</main>
+<footer>
+<p>The Markdown documents and CSV files are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The scripts and tests are MIT. LICENSE says which applies to what.</p>
+<p>Generated from <code>WIX.md</code> in this repository.</p>
+<p>This project is independent and is not affiliated with Shopify or WooCommerce. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace. It is not affiliated with Wix. Those names are used only to describe the platforms.</p>
+<ul>
+<li><a href="https://catalog-signoff.pages.dev/guides/woocommerce-to-shopify-migration-checklist.html">Checklist guide</a></li>
+<li><a href="https://catalog-signoff.pages.dev/tools/readiness-scan.html">Free readiness scan</a></li>
+<li><a href="https://catalog-signoff.pages.dev/tools/redirect-map.html">Free redirect map</a></li>
+</ul>
+</footer>
+</body>
+</html>

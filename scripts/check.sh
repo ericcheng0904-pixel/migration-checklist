@@ -1,5 +1,5 @@
 #!/bin/sh
-# Run the unit tests and the Markdown link checks.
+# Run the unit tests, the printable page check, and the Markdown link checks.
 # Usage: sh scripts/check.sh
 set -u
 
@@ -20,6 +20,14 @@ else
   status=1
 fi
 
+printf '\nPrintable pages\n'
+if python3 scripts/make-printable.py --check; then
+  pages=passed
+else
+  pages=failed
+  status=1
+fi
+
 printf '\nMarkdown links\n'
 if python3 scripts/check_markdown_links.py; then
   links=passed
@@ -30,6 +38,7 @@ fi
 
 printf '\nSummary\n'
 printf '  unit tests: %s\n' "$unit"
+printf '  printable pages: %s\n' "$pages"
 printf '  markdown links: %s\n' "$links"
 if [ "$status" -eq 0 ]; then
   printf 'OK\n'

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WooCommerce to Shopify migration checklist (printable)</title>
+<meta name="description" content="A printable page of the WooCommerce to Shopify catalog checklist. Open it in a browser, tick the items, then print or save the page as a PDF.">
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+html { background: #fff; }
+body {
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2.5rem;
+  max-width: 40rem;
+  color: #111;
+  background: #fff;
+  font: 1.05rem/1.5 Georgia, "Iowan Old Style", Palatino, "Palatino Linotype", serif;
+  overflow-wrap: anywhere;
+}
+main, footer { max-width: 100%; }
+h1 { font-size: 1.55rem; line-height: 1.25; margin: 0 0 1rem; }
+h2 {
+  font-size: 1.2rem;
+  line-height: 1.3;
+  margin: 1.75rem 0 0.6rem;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+p { margin: 0.65rem 0; }
+a { color: inherit; text-decoration: underline; text-underline-offset: 0.12em; }
+ul, ol { margin: 0.6rem 0; padding-left: 1.3rem; }
+li { margin: 0.35rem 0; }
+ul.checks { list-style: none; padding-left: 0; margin-left: 0; }
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
+  list-style: none;
+  margin: 0.55rem 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.box {
+  flex: 0 0 auto;
+  width: 0.85em;
+  height: 0.85em;
+  margin-top: 0.28em;
+  border: 1px solid #000;
+}
+.check-text { min-width: 0; }
+blockquote {
+  margin: 1rem 0;
+  padding: 0 0 0 0.9rem;
+  border-left: 3px solid #000;
+}
+blockquote p { margin: 0.4rem 0; }
+pre, code {
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+}
+code { font-size: 0.92em; }
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-x: auto;
+  max-width: 100%;
+  margin: 0.8rem 0;
+  padding: 0.75rem 0.8rem;
+  border: 1px solid #bbb;
+}
+pre code { font-size: 0.82rem; }
+footer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #000;
+  font-size: 0.95rem;
+}
+footer ul { padding-left: 1.2rem; }
+@page { margin: 16mm; }
+@media print {
+  html, body { color: #000; background: #fff; }
+  body { padding: 0; max-width: none; }
+  a { color: #000; text-decoration: underline; }
+  .box { border-color: #000; }
+  .nav { display: none; }
+  a[href^="https://"]::after,
+  a[href^="http://"]::after {
+    content: " (" attr(href) ")";
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+}
+</style>
+</head>
+<body>
+<main>
+<p class="nav"><a href="index.html">All printable checklists</a></p>
+<h1>Checklist</h1>
+<p>Copy this file into your tracker and tick items per phase. Each line is one check. "Why it bites" is the failure that shows up after launch if you skip it.</p>
+<p>This project is independent and is not affiliated with Shopify or WooCommerce. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace. It is not affiliated with Wix.</p>
+<h2>Before you start</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Freeze product edits, then take the WooCommerce product CSV you will actually import. Why it bites: a product changed after that export is absent from every later comparison.</span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Write down the plugins the catalog depends on (bundles, subscriptions, custom product fields, SEO). Why it bites: the built-in product CSV drops columns it does not recognise, so plugin data is missing unless it was exported as meta. <a href="https://woocommerce.com/document/product-csv-importer-exporter/">Product CSV importer and exporter</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Back up both the <code>wp-content</code> folder and the database. Why it bites: the WordPress XML export does not include products, orders, or WooCommerce settings. <a href="https://woocommerce.com/document/backup-wordpress-content/">Backing up WordPress content</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Save a URL list for products, product categories, product tags, pages, and posts, using the live permalink settings. Why it bites: those paths change on Shopify, and you cannot rebuild the list from memory on launch day. <a href="https://woocommerce.com/document/permalinks/">Permalinks</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Confirm which product types you sell: simple, variable, grouped, external, virtual, downloadable. Why it bites: grouped and external products have no column of the same meaning in the Shopify product CSV. <a href="https://woocommerce.com/document/product-csv-importer-exporter/">Product CSV schema</a></span></li>
+</ul>
+<h2>Product data</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Map each simple product to one Shopify variant, and each WooCommerce variation to one Shopify variant under the parent handle. Why it bites: the parent <code>variable</code> row is not itself a variant. <a href="https://woocommerce.com/document/variable-product/">Variable products</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Keep variation attributes to three options on one Shopify product (for example size, color, and material). Why it bites: a product can have up to three options; a fourth variation attribute is dropped or has to become another product or a metafield. You can create up to 2,048 variants per product, and some themes and apps might not support more than 100. A store with 500,000 or more variants can add up to 10,000 new variants in a day by CSV, unless it is on the Plus plan. <a href="https://help.shopify.com/en/manual/products/variants/add-variants">Adding variants</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">For a product with no options, set the option name to <code>Title</code> and the option value to <code>Default Title</code>. Why it bites: the inventory CSV guide says that, and the product CSV guide instead says the Option1 name should be <code>Default Title</code>. Check a fresh export from the destination store before you trust either sentence. <a href="https://help.shopify.com/en/manual/inventory-and-locations/setup/inventory-csv">Inventory CSV</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Match the destination file's header row to a current Shopify product export. Why it bites: the help page's column table, the sample file that page links, and the WooCommerce migration guide do not all use the same names (<code>Barcodes</code> versus <code>Variant Barcodes</code>, <code>Option1 LinkedTo</code> versus <code>Option1 Linked To</code>, and older names such as <code>Variant SKU</code> and <code>Body (HTML)</code>). <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a> <a href="https://help.shopify.com/cdn/shopifycloud/product-knowledge/production/csv/product_template.csv">Sample product template</a> <a href="https://help.shopify.com/en/manual/products/import-export/common-import-issues">Common import problems</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-woocommerce">Migrate from WooCommerce</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Give every variation its own SKU and compare SKUs as text. Why it bites: WooCommerce matches updates on SKU, and a spreadsheet often turns <code>01482</code> into <code>1482</code>. <a href="https://woocommerce.com/document/product-csv-importer-exporter/">Product CSV schema</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Put the price the customer pays in Shopify <code>Price</code>. When the WooCommerce product is on sale, put <code>Sale price</code> in <code>Price</code> and <code>Regular price</code> in <code>Compare-at price</code>. Why it bites: a sale displays only when compare-at is higher than price. Shopify's WooCommerce migration guide maps Regular price to Variant Price and does not mention sale price, so a straight rename drops the original price. <a href="https://help.shopify.com/en/manual/products/details/product-pricing/sale-pricing">Sale prices</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-woocommerce">Migrate from WooCommerce</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Record whether WooCommerce prices were entered inclusive or exclusive of tax, and set Shopify's tax display to match. Why it bites: the CSV stores the number you typed, with no tax-inclusive flag. If those numbers already include tax and Shopify adds tax at checkout, the customer pays more than the number in the file. <a href="https://woocommerce.com/document/setting-up-taxes-in-woocommerce/">Prices entered with tax</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Charge tax and the Price column</a> <a href="https://help.shopify.com/en/manual/international/pricing/dynamic-tax-inclusive-pricing">Dynamic tax-inclusive pricing</a> <a href="https://help.shopify.com/en/manual/markets/customizations/duties-and-taxes">Duties and taxes for markets</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Use the same currency on both stores, and keep currency symbols out of the price cells. Why it bites: WooCommerce keeps the same numbers when you change the base currency; it does not convert them. Shopify's <code>Price</code> column is the amount with no symbol, in the store currency. <a href="https://woocommerce.com/document/shop-currency/">Shop currency</a> <a href="https://help.shopify.com/en/manual/intro-to-shopify/initial-setup/setup-business-settings">Store currency</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Convert weight into grams for <code>Weight value (grams)</code>, and set <code>Weight unit for display</code> separately. Why it bites: WooCommerce exports the number in the store's unit (<code>Weight (kg)</code> when the unit is kg). Shopify's examples are 5.125 kilograms as <code>5125</code> and 4 pounds as <code>1814</code>. Do not copy length, width, and height into packed-product columns until you mean the packed size. <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a> <a href="https://woocommerce.com/document/configuring-woocommerce-settings/products/">Weight and dimension units</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Turn on inventory tracking only where WooCommerce stock is a number, and use the inventory CSV when the Shopify store has more than one location. Why it bites: a numeric WooCommerce stock value turns stock management on; a blank value turns it off. The product CSV quantity column applies to a single location. <a href="https://woocommerce.com/document/product-csv-importer-exporter/">Product CSV schema</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a> <a href="https://help.shopify.com/en/manual/inventory-and-locations/setup/inventory-csv">Inventory CSV</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Map WooCommerce <code>Published</code> to Shopify <code>Status</code>, and decide <code>Published on online store</code> separately. Why it bites: <code>1</code> is published, <code>0</code> is private, <code>-1</code> is draft, and <code>2</code> is pending review. Shopify's CSV values are <code>active</code>, <code>draft</code>, and <code>archived</code>. A draft that lands as <code>active</code> goes on sale. Catalog visibility (<code>visible</code>, <code>catalog</code>, <code>search</code>, <code>hidden</code>) has no column of the same name. The admin also has an Unlisted status that this CSV value list does not include; check the current docs before you write it into a file. <a href="https://woocommerce.com/document/product-csv-importer-exporter/">Product CSV schema</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a> <a href="https://help.shopify.com/en/manual/products/details/product-details-page">Product status</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Put every product image on a public URL, one image per Shopify row, with alt text filled in by hand. Why it bites: the WooCommerce product CSV cannot add or update alt text, the first image is the featured image, and Shopify accepts up to 250 images per product with alt text up to 512 characters. <a href="https://woocommerce.com/document/product-csv-importer-exporter/">Product CSV schema</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product images in CSV</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Rebuild categories as collections. Why it bites: WooCommerce categories are a hierarchy (<code>Home goods &gt; Audio</code> style). Shopify's <code>Collection</code> column is import-only, is not in the export, accepts one collection, and is limited to 255 characters. Automated collections can key off tags, type, or other conditions. <a href="https://woocommerce.com/document/managing-product-taxonomies/">Categories</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Collection column</a> <a href="https://help.shopify.com/en/manual/products/collections">Collections</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Copy tags across, and stay under 250 tags per Shopify product. Why it bites: both CSVs store several tags in one cell, separated by commas. <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a> <a href="https://woocommerce.com/document/managing-product-taxonomies/">Tags</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Send attributes that are not used for variations, and <code>Meta:</code> custom fields, to product metafields. Why it bites: only three attributes can become options. Variant metafields are not in the product CSV. The published schema example is <code>meta:product_depth</code>; the sample export and the exporter label the column <code>Meta: your_key</code>. Check a fresh export. <a href="https://woocommerce.com/document/product-csv-importer-exporter/">Product CSV schema</a> <a href="https://woocommerce.github.io/code-reference/files/woocommerce-includes-export-class-wc-product-csv-exporter.html">Exporter column labels</a> <a href="https://help.shopify.com/en/manual/custom-data/metafields">Metafields</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Keep each product's URL handle unique. Why it bites: the handle is the product's identifier in the CSV. Two products that share one handle are one product, and a later row can overwrite the earlier one. <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a></span></li>
+</ul>
+<h2>Customers and orders</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Import products first, then customers, then historical orders. Why it bites: orders need products and customers already in the store if those records are to connect. <a href="https://help.shopify.com/en/manual/migrating-to-shopify">Migrate to Shopify</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Import customer profiles with the customer CSV, and plan for the 15 MB file limit. Why it bites: the Email column has to be present, total spent and total orders are not imported, and duplicate emails or phone numbers are skipped except the last one. <a href="https://help.shopify.com/en/manual/customers/import-export-customers">Importing customers</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Do not expect passwords to come across. Why it bites: the customer CSV cannot migrate passwords. The import guide says to invite customers to create new passwords. If the store uses customer accounts with sign-in links, customers instead enter their email and a one-time 6-digit code, and a password is not required. Check which account type the destination store uses. <a href="https://help.shopify.com/en/manual/customers/import-export-customers">Importing customers</a> <a href="https://help.shopify.com/en/manual/customers/customer-accounts">Customer accounts</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Move order history with an app or the Order API, not with the product or customer CSV. Why it bites: the customer CSV cannot import orders. Shopify's migration guide lists historical orders under migration apps, the Order API, and the Transaction API. The WooCommerce guide describes a plugin export and a migration app for the import, not a native order CSV. People set to receive new-order mail will get one email per imported historical order unless those notifications are off during the import. <a href="https://help.shopify.com/en/manual/migrating-to-shopify">Migrate to Shopify</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-woocommerce">Migrate from WooCommerce</a> <a href="https://help.shopify.com/en/manual/customers/import-export-customers">Importing customers</a></span></li>
+</ul>
+<h2>Content</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Copy pages across, or move them with an app or the Page API. Why it bites: there is no page CSV in the migration guide. On Shopify you create pages under Online Store &gt; Pages. A WordPress export of posts and pages does not include the product catalog. <a href="https://help.shopify.com/en/manual/migrating-to-shopify">Migrate to Shopify</a> <a href="https://help.shopify.com/en/manual/online-store/add-edit-pages">Pages</a> <a href="https://woocommerce.com/document/backup-wordpress-content/">Backing up WordPress content</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Copy blog posts into a Shopify blog, or move them with an app or the Blog API. Why it bites: posts are not in the product CSV, and the migration guide does not offer a blog CSV. <a href="https://help.shopify.com/en/manual/migrating-to-shopify">Migrate to Shopify</a> <a href="https://help.shopify.com/en/manual/online-store/blogs">Blogs</a> <a href="https://wordpress.org/documentation/article/tools-export-screen/">Tools Export screen</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Plan reviews separately. Why it bites: Shopify's WooCommerce migration guide says you cannot export or migrate reviews from WooCommerce to Shopify. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-woocommerce">Migrate from WooCommerce</a></span></li>
+</ul>
+<h2>SEO</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Add a 301 redirect for every old product, category, tag, page, and post path you still need. Why it bites: Shopify redirects work only when the old path 404s, and you cannot redirect reserved paths such as <code>/products</code>, <code>/collections</code>, or <code>/collections/all</code>. A store can store 100,000 redirects, or 20,000,000 on the Plus plan. Query strings might not redirect as you expect. <a href="https://help.shopify.com/en/manual/online-store/menus-and-links/url-redirect">URL redirects</a> <a href="https://woocommerce.com/document/permalinks/">Permalinks</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Read the new path from the live Shopify page before you write the redirect. Why it bites: the handle is what appears in the product URL, and a page that was <code>/policies/shipping-policy</code> may now be <code>/pages/shipping-policy</code>. <a href="https://help.shopify.com/en/manual/inventory-and-locations/setup/inventory-csv">Inventory CSV</a> <a href="https://shopify.dev/docs/api/ajax/reference/product">Product URL shape</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify">Migrate to Shopify</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Check the canonical URL, not only the address a customer clicked. Why it bites: Shopify's guide to canonical URLs says a product's canonical URL is the product page with no collection and no variant selected, even when the visitor arrived through a collection. Confirm the theme still outputs <code>canonical_url</code> that way. <a href="https://shopify.dev/docs/api/liquid/objects/canonical_url">canonical_url</a> <a href="https://www.shopify.com/partners/blog/canonical-urls">Canonical URLs on Shopify</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Fill Shopify SEO title and SEO description where the old meta title or description mattered. Why it bites: the product CSV allows an SEO title of up to 70 characters and an SEO description of up to 320. Left blank, Shopify uses the product title and description. The built-in WooCommerce product CSV has no meta title or meta description column. <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a> <a href="https://woocommerce.com/document/product-csv-importer-exporter/">Product CSV schema</a> <a href="https://help.shopify.com/en/manual/promoting-marketing/seo">Search engine listing</a></span></li>
+</ul>
+<h2>Launch day</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Spot-check prices, images, variants, and stock on a handful of real products, including one that was on sale and one that was a draft. Why it bites: a file that imported without an error can still have dropped a variant or published a draft. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-woocommerce">Migrate from WooCommerce</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Place a test order, including a failed payment if the test gateway supports it, then cancel or refund it. Why it bites: checkout, tax, shipping, and the notification emails are not proven by a CSV. Test orders through the test gateway do not show in payouts or reports, and customers cannot place live orders while a provider is in test mode. <a href="https://help.shopify.com/en/manual/checkout-settings/test-orders">Placing a test order</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Request the old URLs you saved and confirm each one redirects. Why it bites: a redirect you can see in the admin still fails if the old path does not 404, or if it uses a reserved prefix. <a href="https://help.shopify.com/en/manual/online-store/menus-and-links/url-redirect">URL redirects</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Leave private mode only when those checks pass. Why it bites: search engines cannot read the sitemap while the store is in private mode. <a href="https://help.shopify.com/en/manual/migrating-to-shopify">Migrate to Shopify</a></span></li>
+</ul>
+<h2>The first week</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Recount products and variants against the frozen export. Use <a href="spot-checks.html">SPOT-CHECKS.md</a>. Why it bites: a missing size or a merged handle rarely shows up in the import summary.</span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Open Shopify reports for live orders and traffic, not for the test-gateway orders. Why it bites: those test orders are excluded from reports, so an empty report on day one can be the test data rather than a broken setup. <a href="https://help.shopify.com/en/manual/reports-and-analytics/shopify-reports">Shopify reports</a> <a href="https://help.shopify.com/en/manual/checkout-settings/test-orders">Placing a test order</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Place one small live payment after test mode is off, then refund it if you do not want to keep it. Why it bites: test mode and a live card are different paths. <a href="https://help.shopify.com/en/manual/checkout-settings/test-orders">Placing a test order</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Re-check the ten old URLs that used to get the most visits. Why it bites: a 301 is cached by browsers and search engines, so a redirect you remove can keep working in people's browsers until the cache expires. <a href="https://help.shopify.com/en/manual/online-store/menus-and-links/url-redirect">URL redirects</a></span></li>
+</ul>
+</main>
+<footer>
+<p>The Markdown documents and CSV files are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The scripts and tests are MIT. LICENSE says which applies to what.</p>
+<p>Generated from <code>CHECKLIST.md</code> in this repository.</p>
+<p>This project is independent and is not affiliated with Shopify or WooCommerce. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace. It is not affiliated with Wix.</p>
+<ul>
+<li><a href="https://catalog-signoff.pages.dev/guides/woocommerce-to-shopify-migration-checklist.html">Checklist guide</a></li>
+<li><a href="https://catalog-signoff.pages.dev/tools/readiness-scan.html">Free readiness scan</a></li>
+<li><a href="https://catalog-signoff.pages.dev/tools/redirect-map.html">Free redirect map</a></li>
+</ul>
+</footer>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Squarespace to Shopify migration checklist (printable)</title>
+<meta name="description" content="A printable page of the Squarespace to Shopify catalog checklist. Open it in a browser, tick the items, then print or save the page as a PDF.">
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+html { background: #fff; }
+body {
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2.5rem;
+  max-width: 40rem;
+  color: #111;
+  background: #fff;
+  font: 1.05rem/1.5 Georgia, "Iowan Old Style", Palatino, "Palatino Linotype", serif;
+  overflow-wrap: anywhere;
+}
+main, footer { max-width: 100%; }
+h1 { font-size: 1.55rem; line-height: 1.25; margin: 0 0 1rem; }
+h2 {
+  font-size: 1.2rem;
+  line-height: 1.3;
+  margin: 1.75rem 0 0.6rem;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+p { margin: 0.65rem 0; }
+a { color: inherit; text-decoration: underline; text-underline-offset: 0.12em; }
+ul, ol { margin: 0.6rem 0; padding-left: 1.3rem; }
+li { margin: 0.35rem 0; }
+ul.checks { list-style: none; padding-left: 0; margin-left: 0; }
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
+  list-style: none;
+  margin: 0.55rem 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.box {
+  flex: 0 0 auto;
+  width: 0.85em;
+  height: 0.85em;
+  margin-top: 0.28em;
+  border: 1px solid #000;
+}
+.check-text { min-width: 0; }
+blockquote {
+  margin: 1rem 0;
+  padding: 0 0 0 0.9rem;
+  border-left: 3px solid #000;
+}
+blockquote p { margin: 0.4rem 0; }
+pre, code {
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+}
+code { font-size: 0.92em; }
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-x: auto;
+  max-width: 100%;
+  margin: 0.8rem 0;
+  padding: 0.75rem 0.8rem;
+  border: 1px solid #bbb;
+}
+pre code { font-size: 0.82rem; }
+footer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #000;
+  font-size: 0.95rem;
+}
+footer ul { padding-left: 1.2rem; }
+@page { margin: 16mm; }
+@media print {
+  html, body { color: #000; background: #fff; }
+  body { padding: 0; max-width: none; }
+  a { color: #000; text-decoration: underline; }
+  .box { border-color: #000; }
+  .nav { display: none; }
+  a[href^="https://"]::after,
+  a[href^="http://"]::after {
+    content: " (" attr(href) ")";
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+}
+</style>
+</head>
+<body>
+<main>
+<p class="nav"><a href="index.html">All printable checklists</a></p>
+<h1>Squarespace to Shopify</h1>
+<p>Copy this file into your tracker and tick items per phase. Each line is one check. "Why it bites" is the failure that shows up after launch if you skip it. These are the Squarespace checks, written so this file can be used on its own. The WooCommerce list is <a href="woocommerce-to-shopify.html">CHECKLIST.md</a>.</p>
+<p>Practise on test-catalogs/squarespace-basic. <code>squarespace.csv</code> is a fictional product export. <code>shopify.csv</code> is that catalog in the Shopify product CSV. The mapping used in the pair is in test-catalogs/README.md.</p>
+<p>Licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+<p>This project is independent and is not affiliated with Shopify or WooCommerce. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace. It is not affiliated with Wix. Those names are used only to describe the platforms.</p>
+<p>Where two pages disagree, the disagreement is stated once, in a note or in the item for that topic. Where the docs do not settle a cell, the line says to check in your own export.</p>
+<h2>Before you start</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Freeze product edits, then export from the Products panel. Why it bites: open the Products &amp; Services panel, click Products, then Export all, or tick the checkbox beside the featured image and click Export. "You can export up to 10,000 products." Later edits do not flow back into that file. <a href="https://support.squarespace.com/hc/en-us/articles/360000694948-Export-products-to-a-csv">Export products</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Treat the file as physical and service products, and leave download products off the import. Why it bites: the Export all steps are headed Export all physical and service products, and the selection steps carry no such heading. The download-products page says it is not possible "to export download products." The import page lists download products as not importable. <a href="https://support.squarespace.com/hc/en-us/articles/360000694948-Export-products-to-a-csv">Export products</a> <a href="https://support.squarespace.com/hc/en-us/articles/206540787-Download-products">Download products</a> <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Check gift cards in your own export. Why it bites: the export article and the import article do not mention them. The inventory page says you can bulk edit "physical and service products" from a products .csv, and it does not mention gift cards. Whether a gift card row is exported is not said. <a href="https://support.squarespace.com/hc/en-us/articles/205811228-View-edit-and-search-your-product-inventory">Product inventory</a> <a href="https://support.squarespace.com/hc/en-us/articles/360000694948-Export-products-to-a-csv">Export products</a> <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Read the subscription sentence as a move between Squarespace sites. Why it bites: the import limitations say "You can’t move customer subscriptions between Squarespace sites." The export article does not mention subscription products. Check in your own export before you treat one as missing or present. <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://support.squarespace.com/hc/en-us/articles/360000694948-Export-products-to-a-csv">Export products</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Count columns against the example, then look in your own export for columns the example does not have. Why it bites: the export page says the export "uses the same format as our import .csv" with an additional column for pages, and it does not name that column. The example has 26 columns, from <code>Product ID [Non Editable]</code> through <code>Hosted Image URLs</code>, and it includes <code>Product Page</code>, so check whether <code>Product Page</code> is that column. It has no <code>GTIN</code> and no <code>MPN</code>, which only the two move-between-sites tables on the import page list. <a href="https://support.squarespace.com/hc/en-us/articles/360000694948-Export-products-to-a-csv">Export products</a> <a href="https://assets.squarespace.com/universal/commerce/product_import-v2.csv">Example CSV</a> <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a></span></li>
+</ul>
+<p>Note on version 7.0 and 7.1 in the import article: it allows "up to 10,000 products to a version 7.1 site," up to 200 to a version 7.0 site, and up to 250 variants per product in both versions. On a move between sites, Product Page is required on 7.1 and must match an existing store page. On 7.0 it is optional, and deleting the value creates a new, disabled, not-linked store page. The 7.0 bulk-edit table and the 7.0 import-from-another-platform table say the new page is not-linked, and they do not say disabled. Categories are required on the 7.1 tables and optional on the 7.0 tables. The 7.1 move table says products have a <code>/p/</code> before the URL slug. The export article does not split its steps by version. <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a></p>
+<h2>Product data</h2>
+<p>Note on variant caps: the pages disagree and do not say which applies. The variants page (updated 22 October 2026) says each product can have "up to six options and 250 variant combinations" in the editor or the .csv importer. The import page says up to 250 variants per product. The store page types page (updated 17 July 2025) lists up to 100 variants per product for all stores. The import tables document three option pairs, not six. The 10,000 and 200 product figures agree between the import page and the store page types page. <a href="https://support.squarespace.com/hc/en-us/articles/206540687-Add-product-variants">Adding variants</a> <a href="https://support.squarespace.com/hc/en-us/articles/227059347-Store-page-types">Store page types</a> <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a></p>
+<p>Note on a column only Shopify names: Shopify's guide maps <code>Default Vendor Name</code> to Vendor. The example has no such column, and none of the Squarespace pages cited here names it. Check in your own export. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a></p>
+<p>Note on the image column name: the example header and the move-between-sites tables use <code>Hosted Image URLs</code>. The bulk-edit tables and the import-from-another-platform tables use <code>Hosted Image URL</code>. <a href="https://assets.squarespace.com/universal/commerce/product_import-v2.csv">Example CSV</a> <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a></p>
+<p>Note on sale price in the example: the import table says to enter a sale price only when On Sale is Yes. The example still fills Sale Price on rows where On Sale is No. A price over 1,000,000 in any currency cannot be imported. <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://assets.squarespace.com/universal/commerce/product_import-v2.csv">Example CSV</a></p>
+<p>Note on the stock word: the import table says "Enter unlimited for items with unlimited stock." The example cell is <code>Unlimited</code>. Check the characters in your own export. <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://assets.squarespace.com/universal/commerce/product_import-v2.csv">Example CSV</a></p>
+<p>Note on product type spelling: the example writes <code>PHYSICAL</code>. The import-from-another-platform table says to enter Physical or Service, on the first product row. The move tables say not to edit existing values and to leave a blank cell blank. The bulk-edit tables say only not to edit existing values. <a href="https://assets.squarespace.com/universal/commerce/product_import-v2.csv">Example CSV</a> <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a></p>
+<p>Note on categories: the import-article tables ask for the category URL slug, including the slash (the 7.0 move table gives only the examples), lowercase, up to 25 characters, with commas between several (the 7.0 import table does not say so), and only on the first product row. The examples are <code>/clothing</code> and <code>/clothing/blouses</code>. The 7.1 tables mark Categories required and the 7.0 tables mark it optional. The example uses names, such as <code>Sour Stuff</code>, with no slash. The categories page calls the navigation label Name and the filtered-page address the URL slug. Check in your own export. <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://assets.squarespace.com/universal/commerce/product_import-v2.csv">Example CSV</a> <a href="https://support.squarespace.com/hc/en-us/articles/206541007-Organize-your-store-page-with-categories-and-tags">Categories and tags</a></p>
+<p>Note on grams: Shopify's Squarespace guide multiplies pounds by 453.6 and kilograms by 1,000, and gives no factor for other units. The product CSV page says to enter no decimals, and its example for 4 pounds is <code>1814</code>, while 4 times 453.6 is 1814.4. Drop the decimals. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a></p>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Read a variant product as a first product row, then option rows, and keep the first row as a variant. Why it bites: for the sample with variants, "Row 3 is the First product row, and rows 4-8 are the Option rows." That first row holds the first option combination, the title, the product URL, categories, tags, visibility, and the images. Option rows repeat the option names and fill SKU, price, and stock. <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://assets.squarespace.com/universal/commerce/product_import-v2.csv">Example CSV</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Check whether <code>Product ID [Non Editable]</code> repeats on option rows. Why it bites: the move steps say to make the cells beneath Product ID and Variant ID blank, while bulk edit says "Don't edit existing values," so an export can contain them. The Troubleshooting entry for a missing column says cell 2A contains a product ID, which disagrees with the move steps, and no page says the id repeats on an option row. The example leaves both id columns blank, and the import-from-another-platform tables say to leave them blank, so check in your own export. <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://assets.squarespace.com/universal/commerce/product_import-v2.csv">Example CSV</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Map <code>Option Name 1</code> through <code>Option Value 3</code> only. Why it bites: the import tables document three Option Name and Option Value pairs, and each pair creates a variant, while the variants page allows six options in the .csv importer too. Squarespace does not say how options 4, 5, and 6 are written in an export, so check in your own export. "You can create up to 2,048 variants for a product," that page caps a product at three options, and some themes and apps might not support more than 100. <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://support.squarespace.com/hc/en-us/articles/206540687-Add-product-variants">Adding variants</a> <a href="https://help.shopify.com/en/manual/products/variants/add-variants">Shopify variants</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">When On Sale is Yes, put Sale Price in Shopify Price and Price in Compare-at price, and when On Sale is No or blank, keep Price and leave Compare-at price empty. Why it bites: "Only enter a sale price if the sale status is set as Yes (next column)." The example still fills Sale Price on No rows, which is the note above. Shopify's guide moves the two prices only on a Yes row and does not say what Compare-at price holds on other rows, so leaving it empty is this list's choice. <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Keep Compare-at price higher than Price on a row that should show a sale. Why it bites: Compare-at price must be higher than Price "to display the sale price." Only the sale price is displayed at checkout, and the theme controls whether and where a sale shows. <a href="https://help.shopify.com/en/manual/products/details/product-pricing/sale-pricing">Sale prices</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Map a numeric Stock to Inventory tracker <code>shopify</code> and that quantity, and map <code>Unlimited</code> to a blank tracker and a blank quantity. Why it bites: Shopify's guide says to remove non-numerical characters from Stock and does not mention Unlimited, so removing the word leaves an empty cell. "The default value is 0 if no value is entered," so that empty cell is not unlimited while tracking stays on. A blank tracker means inventory isn't tracked, the Squarespace file has no backorder column, and the spelling note is above. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Keep Weight, Length, Width, and Height as numbers until you know the store's unit, and do not invent a currency column. Why it bites: those four columns are in the example and the import tables, and "After the import, dimensions will match your store’s measurement standard." Neither the example nor the import tables have a unit column or a currency column, and prices display in the store's currency after import, so check in your own export. The orders file has a Currency column, which is a different export. <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://assets.squarespace.com/universal/commerce/product_import-v2.csv">Example CSV</a> <a href="https://support.squarespace.com/hc/en-us/articles/206540677-Export-Commerce-orders">Export orders</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Enter Shopify weight as whole grams after you know the unit, or leave the grams cell blank. Why it bites: the grams cell wants "only the numerical value, without the unit of measurement or decimals," so 5.125 kilograms is <code>5125</code>, and a blank cell becomes 0. The guide's pounds factor gives 1814.4 for 4 pounds, so drop the decimals, as the grams note above says. Leave Length, Width, and Height out of the packed-product columns. <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Set Status and Published on online store from Visible, on purpose. Why it bites: Visible is Yes or No, on the first product row only, and an import can only publish or hide ("You can’t schedule products with an import"). What a scheduled product shows in Visible is not said, so check your own export. Shopify's guide maps Yes and No to true and false on Published on online store, and a missing Status column uploads the product as active, so set Status to <code>active</code>, <code>draft</code>, or <code>archived</code>. <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Put one category label in Type, copy Tags, and leave Collection empty. Why it bites: Shopify's guide says "Squarespace exports categories as URL paths, such as /clothing/blouses," and to replace each path with one product type. The example and the import tables disagree, which is the categories note, and tags stay comma-separated on the first product row, up to 80 characters per tag. Collection is import-only, one collection, 255 characters, and absent from a Shopify export. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a> <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Copy Product URL into the URL handle, then copy that handle onto every variant row and image row. Why it bites: the cell is the slug without a leading slash, 3 to 200 characters, dashes, first product row only, and capitals become lowercase. "In version 7.1, product URLs always include a p/ before the customizable URL slug" so the live path is the store page, that prefix, and the cell. Shopify's guide allows letters, dashes, and numbers, and bars spaces, accents, and periods. <a href="https://support.squarespace.com/hc/en-us/articles/205814578-URL-slugs">URL slugs</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Split the image cell into one Product image URL per row, and leave alt text and variant images empty. Why it bites: the export omits Featured Images, Product image alt text, and Variant images. "Separate multiple images with spaces or line breaks," on the first product row only, and the upload file cannot assign variant images. Shopify takes one URL per row, downloads the file during import, says the file name should not include <code>_thumb</code>, <code>_small</code>, or <code>_medium</code> suffixes, and allows 512 characters of alt text, which this export does not contain. <a href="https://support.squarespace.com/hc/en-us/articles/360000694948-Export-products-to-a-csv">Export products</a> <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Leave customers, orders, reviews, redirects, the pages column, and options 4 through 6 out of the Shopify product CSV. Why it bites: the column table has no column for those, and a product can have up to 3 options. It does have <code>Weight unit for display</code> and <code>Packed product dimension unit</code>, which the Squarespace example has no column for, and its price columns take the amount without a currency symbol. "you can't create a gift card by importing a product CSV file," and SEO title allows 70 characters and SEO description 320. <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a> <a href="https://assets.squarespace.com/universal/commerce/product_import-v2.csv">Example CSV</a></span></li>
+</ul>
+<h2>Customers and orders</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Export the customer list you actually opened, and keep it apart from the product file. Why it bites: the Lists &amp; Segments file lists Account, names, Email, order totals, last-order date, Customer Since, last-used addresses, Tags, and no password, and "Notes aren't included in the exported .csv file." Shopify's guide uses Contacts and Export all contacts, omits notes and saved addresses except the latest physical order's address, and names the Squarespace columns Accepts Marketing and Shipping Address 1, which are not in Squarespace's export column list, so check the headings in your download. <a href="https://support.squarespace.com/hc/en-us/articles/229497568-Managing-customers">Managing customers</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Import customers only after the file uses Shopify's customer headings. Why it bites: "You can't import a customer CSV that doesn't match the Shopify headings," and the same caution says there is no data mapping support for customer CSV imports. The guide's province column wants the province or state ISO code, and it says the country column is not in the Squarespace download. Shopify's customer import page limits a file to 15 MB, does not migrate passwords, and does not import the Total Spent and Total Orders columns. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a> <a href="https://help.shopify.com/en/manual/customers/import-export-customers">Importing customers</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Export orders from Products &amp; Services, then Orders, then Export data, then Download CSV, and move history with an app, not the product CSV. Why it bites: "You can export orders for active, visible products only," chosen by status and by the date the order was created. A partial refund still shows the full line price, and hidden products, products on disabled store pages, and earlier versions of renamed products are left out. Shopify's guide treats historical orders as fulfilled and sends them through an app such as EZ Importer. <a href="https://support.squarespace.com/hc/en-us/articles/206540677-Export-Commerce-orders">Export orders</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a></span></li>
+</ul>
+<h2>Content</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Copy pages and posts across by hand. Why it bites: Squarespace's site-content export is an .xml file in WordPress format, and "Only one blog page exports." Store pages and product blocks are in its list of content that doesn't export, and Shopify's guide repeats the WordPress .xml and one-blog-page limits and adds that you can't import the file into Shopify. The hub page lists site content, products, and contacts as three separate exports. <a href="https://support.squarespace.com/hc/en-us/articles/206566687-Export-your-site-content">Export your site content</a> <a href="https://support.squarespace.com/hc/en-us/articles/205814028-Import-to-and-export-from-your-site">Site import and export</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Plan reviews on their own. Why it bites: the product export will not include customer reviews, and Shopify's guide says "Customer reviews can't be exported." The product CSV has no reviews column. <a href="https://support.squarespace.com/hc/en-us/articles/360000694948-Export-products-to-a-csv">Export products</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a></span></li>
+</ul>
+<h2>SEO</h2>
+<p>Note on a moved product: the mappings page says <code>https://mybusiness.com/shop1/item</code> would become <code>https://mybusiness.com/shop2/item</code>, with no <code>/p/</code>, and the redirect lines on that page are <code>/shop1/p/item -&gt; /shop2/p/item 301</code>. <a href="https://support.squarespace.com/hc/en-us/articles/205815308-URL-mappings">URL mappings</a></p>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Save the Squarespace URL mappings you still need, then build those redirects again on Shopify. Why it bites: mappings live under Developer tools as <code>/old-url -&gt; /new-url 301</code>, and the URL mappings field "has a limit of 400 KB, which is usually around 2500 redirect lines." A 301 needs the old URL gone and the new URL present, and a redirect works only after the old page is deleted or disabled. A 7.1 example is <code>/store/p/[name] -&gt; /buy/p/[name] 301</code>, and the page says you can only redirect from domains connected to your Squarespace site. <a href="https://support.squarespace.com/hc/en-us/articles/205815308-URL-mappings">URL mappings</a> <a href="https://support.squarespace.com/hc/en-us/articles/205814578-URL-slugs">URL slugs</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Add a Shopify URL redirect for every old path you still need, and read the live path before you write it. Why it bites: the product CSV has no redirect column. The handle "is used in the URL of the product page," and on 7.1 the old path also has the store page and <code>p/</code> before the slug. Shopify's redirects page says redirects work only from broken URLs and lists prefixes it cannot redirect, including <code>/shop</code>, so check a Squarespace store page slug against that list. <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a> <a href="https://support.squarespace.com/hc/en-us/articles/205814578-URL-slugs">URL slugs</a> <a href="https://help.shopify.com/en/manual/online-store/menus-and-links/url-redirect">URL redirects</a></span></li>
+</ul>
+<h2>Launch day</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Spot-check one variant product, one On Sale No row whose Sale Price is filled, one <code>Unlimited</code> stock cell, and one Visible value. Why it bites: Shopify's guide says imported products marked as hidden "aren't published until you make them available to your sales channels," and that a product missing a variant option won't be imported successfully. On test-catalogs/squarespace-basic, <code>JAR-S</code> is on sale, <code>JAR-L</code> and <code>LADLE-FERN</code> keep the regular price, and <code>CLOTH-MIST</code> is the unlimited row. <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a> <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Place test orders before you call checkout done. Why it bites: Shopify's Migrate from Squarespace guide lists a successful and a failed transaction, refunding and canceling an order, fulfilling or partially fulfilling an order, and archiving a successful order as test orders to run. It says to try them "to make sure that everything is working". <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a></span></li>
+</ul>
+<h2>The first week</h2>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Recount rows against the frozen export. Why it bites: the import article's sample calls row 2 "a single product with no variants", and rows 3-8 are one product, and its first row is an option combination. A SKU can be blank, because Squarespace generates it, and Shopify's CSV guide puts all of a simple product's fields on its first row and uses later rows only for extra images. On <code>test-catalogs/squarespace-basic</code>, the rows are <code>JAR-S</code>, <code>JAR-L</code>, <code>LADLE-FERN</code>, and <code>CLOTH-MIST</code>, and Shopify's guide says a product missing a variant option won't be imported successfully. <a href="https://support.squarespace.com/hc/en-us/articles/115000378108-Importing-products-from-a-csv">Importing products</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a> <a href="https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-squarespace">Migrate from Squarespace</a></span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Request the old URLs that used to get the most visits. Why it bites: Squarespace says redirects work only from the old page once it is deleted or disabled, and only from domains connected to your Squarespace site, so do not assume a mapping answers on a Shopify store. Read each new path from the live page. <a href="https://support.squarespace.com/hc/en-us/articles/205815308-URL-mappings">URL mappings</a> <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Product CSV columns</a></span></li>
+</ul>
+</main>
+<footer>
+<p>The Markdown documents and CSV files are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The scripts and tests are MIT. LICENSE says which applies to what.</p>
+<p>Generated from <code>SQUARESPACE.md</code> in this repository.</p>
+<p>This project is independent and is not affiliated with Shopify or WooCommerce. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace. It is not affiliated with Wix. Those names are used only to describe the platforms.</p>
+<ul>
+<li><a href="https://catalog-signoff.pages.dev/guides/woocommerce-to-shopify-migration-checklist.html">Checklist guide</a></li>
+<li><a href="https://catalog-signoff.pages.dev/tools/readiness-scan.html">Free readiness scan</a></li>
+<li><a href="https://catalog-signoff.pages.dev/tools/redirect-map.html">Free redirect map</a></li>
+</ul>
+</footer>
+</body>
+</html>

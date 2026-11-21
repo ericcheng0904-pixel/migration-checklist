@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalog migration spot checks (printable)</title>
+<meta name="description" content="Printable spot checks for counting products, variants, and SKUs in catalog exports. Open the page in a browser, then print or save it as a PDF.">
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+html { background: #fff; }
+body {
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2.5rem;
+  max-width: 40rem;
+  color: #111;
+  background: #fff;
+  font: 1.05rem/1.5 Georgia, "Iowan Old Style", Palatino, "Palatino Linotype", serif;
+  overflow-wrap: anywhere;
+}
+main, footer { max-width: 100%; }
+h1 { font-size: 1.55rem; line-height: 1.25; margin: 0 0 1rem; }
+h2 {
+  font-size: 1.2rem;
+  line-height: 1.3;
+  margin: 1.75rem 0 0.6rem;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+p { margin: 0.65rem 0; }
+a { color: inherit; text-decoration: underline; text-underline-offset: 0.12em; }
+ul, ol { margin: 0.6rem 0; padding-left: 1.3rem; }
+li { margin: 0.35rem 0; }
+ul.checks { list-style: none; padding-left: 0; margin-left: 0; }
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
+  list-style: none;
+  margin: 0.55rem 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.box {
+  flex: 0 0 auto;
+  width: 0.85em;
+  height: 0.85em;
+  margin-top: 0.28em;
+  border: 1px solid #000;
+}
+.check-text { min-width: 0; }
+blockquote {
+  margin: 1rem 0;
+  padding: 0 0 0 0.9rem;
+  border-left: 3px solid #000;
+}
+blockquote p { margin: 0.4rem 0; }
+pre, code {
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+}
+code { font-size: 0.92em; }
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-x: auto;
+  max-width: 100%;
+  margin: 0.8rem 0;
+  padding: 0.75rem 0.8rem;
+  border: 1px solid #bbb;
+}
+pre code { font-size: 0.82rem; }
+footer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #000;
+  font-size: 0.95rem;
+}
+footer ul { padding-left: 1.2rem; }
+@page { margin: 16mm; }
+@media print {
+  html, body { color: #000; background: #fff; }
+  body { padding: 0; max-width: none; }
+  a { color: #000; text-decoration: underline; }
+  .box { border-color: #000; }
+  .nav { display: none; }
+  a[href^="https://"]::after,
+  a[href^="http://"]::after {
+    content: " (" attr(href) ")";
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+}
+</style>
+</head>
+<body>
+<main>
+<p class="nav"><a href="index.html">All printable checklists</a></p>
+<h1>Spot checks</h1>
+<p>These checks answer two questions: how many products and variants are in each file, and which SKUs are in one file but not the other. They are not a full comparison. Do them on a copy of the export, and import the SKU column as text so a spreadsheet does not drop a leading zero while you look.</p>
+<p>Examples below use <code>test-catalogs/common-mistakes/</code>. The variable parent SKU <code>TOTE</code> is in the WooCommerce file and not in the Shopify file. That is expected. The missing variant is <code>TOTE-L</code>.</p>
+<h2>Spreadsheet</h2>
+<ol>
+<li>Open both CSVs. Do not let the sheet convert SKUs to numbers.</li>
+<li>On the WooCommerce sheet, pivot <code>Type</code>. Count <code>simple</code> and <code>variation</code> as sellable rows. Do not count <code>variable</code> parents as variants.</li>
+<li>On the Shopify sheet, count rows that carry variant details, and skip rows that carry only a handle and an image URL. That is the variant count. Count distinct <code>URL handle</code> values. That is the product count. A row with a handle and no SKU is an extra image, not a variant.</li>
+<li><code>XLOOKUP</code> or <code>VLOOKUP</code> the WooCommerce <code>SKU</code> against the Shopify <code>SKU</code>, then the other way. Sort the misses.</li>
+<li>For a SKU that exists in both, compare WooCommerce <code>Sale price</code> and <code>Regular price</code> with Shopify <code>Price</code> and <code>Compare-at price</code>.</li>
+<li>Sort SKUs and look for a short number next to a matching code that still has its leading zero.</li>
+</ol>
+<p>On <code>common-mistakes</code>, the sellable WooCommerce SKUs that are absent from Shopify are <code>01482</code> and <code>TOTE-L</code>. The Shopify SKU that is absent from WooCommerce is <code>1482</code>. <code>SOAP-PINE</code> and <code>OIL-PINE</code> both come back, and they share one handle, so a SKU lookup alone will not show that mistake. Filter the Shopify sheet for duplicate <code>URL handle</code> values where <code>Title</code> is filled in.</p>
+<h2>Python</h2>
+<p>The standard library is enough. From the repository root:</p>
+<pre><code>python3 - &lt;&lt; 'PY'
+import csv
+from collections import Counter
+
+def load(path):
+    with open(path, newline="", encoding="utf-8") as handle:
+        return list(csv.DictReader(handle))
+
+woo = load("test-catalogs/common-mistakes/woocommerce.csv")
+shop = load("test-catalogs/common-mistakes/shopify.csv")
+
+print("WooCommerce types", Counter(row["Type"] for row in woo))
+woo_skus = {row["SKU"] for row in woo if row["Type"] != "variable" and row["SKU"]}
+shop_skus = {row["SKU"] for row in shop if row["SKU"]}
+handles = {row["URL handle"] for row in shop if row["URL handle"]}
+print("sellable WooCommerce SKUs", len(woo_skus))
+print("Shopify SKUs", len(shop_skus))
+print("Shopify products", len(handles))
+print("only in WooCommerce", sorted(woo_skus - shop_skus))
+print("only in Shopify", sorted(shop_skus - woo_skus))
+PY
+</code></pre>
+<p>That prints:</p>
+<pre><code>WooCommerce types Counter({'simple': 7, 'variation': 3, 'variable': 1})
+sellable WooCommerce SKUs 10
+Shopify SKUs 9
+Shopify products 7
+only in WooCommerce ['01482', 'TOTE-L']
+only in Shopify ['1482']
+</code></pre>
+<p><code>small-clean</code> has 4 sellable WooCommerce SKUs, 4 Shopify SKUs, and 5 Shopify rows because the mug has a second image row. The SKU sets are equal. <code>variable-products</code> has 2 + 4 + 16 variations in WooCommerce and 2 + 3 + 8 SKUs in Shopify.</p>
+<h2>csvkit</h2>
+<p><a href="https://csvkit.readthedocs.io/">csvkit</a> is optional. The same counts, with the variable parent still included in the WooCommerce SKU list:</p>
+<pre><code>csvcut -c Type test-catalogs/common-mistakes/woocommerce.csv | tail -n +2 | sort | uniq -c
+csvcut -c SKU test-catalogs/common-mistakes/woocommerce.csv | tail -n +2 | sed '/^$/d' | sort &gt; /tmp/woo-skus.txt
+csvcut -c SKU test-catalogs/common-mistakes/shopify.csv | tail -n +2 | sed '/^$/d' | sort &gt; /tmp/shop-skus.txt
+comm -23 /tmp/woo-skus.txt /tmp/shop-skus.txt
+comm -13 /tmp/woo-skus.txt /tmp/shop-skus.txt
+</code></pre>
+<p><code>comm -23</code> prints SKUs only in the WooCommerce file (<code>01482</code>, <code>TOTE</code>, <code>TOTE-L</code>). <code>comm -13</code> prints SKUs only in the Shopify file (<code>1482</code>). Drop <code>TOTE</code> by hand, or exclude variable parents before <code>csvcut</code>:</p>
+<pre><code>csvgrep -c Type -r '^(simple|variation)$' test-catalogs/common-mistakes/woocommerce.csv \
+  | csvcut -c SKU | tail -n +2 | sort &gt; /tmp/woo-skus.txt
+</code></pre>
+<h2>Magento 2</h2>
+<p><code>test-catalogs/magento-basic/</code> is a Magento product export (<code>magento.csv</code>), not a WooCommerce file. Count rows with <code>product_type</code> <code>simple</code> as the sellable variants. Do not count the <code>configurable</code> row. Do not count a second row that repeats a SKU with <code>store_view_code</code> set: in this file that row is another view of the same product. On the Shopify sheet, count rows that carry variant details, and skip rows that carry only a handle and an image URL.</p>
+<p>On this pair the simple SKUs are <code>WICK-S</code> and <code>WICK-L</code>. Both are in the Shopify file. <code>WICK-LANTERN</code> is the configurable parent and is not a Shopify SKU. The <code>cove</code> row names the same parent <code>Wick Cove Lantern</code> and is not its own product. <a href="magento-to-shopify.html">MAGENTO.md</a> is the checklist for a real export.</p>
+<h2>BigCommerce</h2>
+<p><code>test-catalogs/bigcommerce-basic/</code> is a legacy Bulk Edit export (<code>bigcommerce.csv</code>), not a WooCommerce file. For a product that has SKU rows, count the rows with Item Type <code>SKU</code> as the sellable variants and do not count its <code>Product</code> row. A product with no SKU rows is one variant, and its <code>Product</code> row holds the SKU. Do not count a <code>Rule</code> row. On the Shopify sheet, count rows that carry variant details, and skip rows that carry only a handle and an image URL.</p>
+<p>On this pair the product has SKU rows, so the SKU rows are <code>PITCHER-S</code> and <code>PITCHER-L</code>. Both are in the Shopify file. <code>PITCHER-NETTLE</code> is the product SKU and is not a Shopify SKU. The Rule row repeats <code>PITCHER-L</code> and is not a second variant. <a href="bigcommerce-to-shopify.html">BIGCOMMERCE.md</a> is the checklist for a real export.</p>
+<h2>Squarespace</h2>
+<p><code>test-catalogs/squarespace-basic/</code> is a Squarespace product export (<code>squarespace.csv</code>), not a WooCommerce file. Count every product row and option row, including the first product row of a product that has option rows. On the Shopify sheet, count rows that carry variant details, and skip rows that carry only a handle and an image URL.</p>
+<p>On this pair the SKUs are <code>JAR-S</code>, <code>JAR-L</code>, <code>LADLE-FERN</code>, and <code>CLOTH-MIST</code>. All four are in the Shopify file. The jar's second image row has no SKU and is not a variant. <a href="squarespace-to-shopify.html">SQUARESPACE.md</a> is the checklist for a real export.</p>
+<h2>Wix</h2>
+<p><code>test-catalogs/wix-basic/</code> is an older Wix Stores catalog export (<code>wix.csv</code>), not a WooCommerce file. Count <code>fieldType</code> <code>Variant</code> rows as the variants. Count a <code>Product</code> row only when that product has no options and no <code>Variant</code> rows. A <code>Product</code> row with options but no <code>Variant</code> rows is one variant per option value. Do not count a <code>Product</code> row that has <code>Variant</code> rows, and do not count by <code>sku</code>. On the Shopify sheet, count rows that carry variant details, and skip rows that carry only a handle and an image URL.</p>
+<p>On this pair the Variant SKUs are <code>PITCHER-S</code> and <code>PITCHER-L</code>. <code>LADLE-REED</code> and <code>CLOTH-COVE</code> are Product rows with no options and no Variant rows, so each is one variant. This file has no Product row that has options without Variant rows. All four are in the Shopify file. <code>PITCHER-KELP</code> is the pitcher's Product row SKU and is not a Shopify SKU. The pitcher's second image row has no SKU and is not a variant. <a href="wix-to-shopify.html">WIX.md</a> is the checklist for a real export.</p>
+<h2>Sampling worksheet</h2>
+<p>A sample of rows can show that a problem exists, and a clean sample does not show that the whole file is clean. The numbers below are arithmetic on assumed examples, not measurements of any real catalog or tool.</p>
+<pre><code>chance of at least one wrong row in the sample = 1 - C(N-k, n) / C(N, n)
+</code></pre>
+<ul>
+<li><code>N</code> is the number of rows in the catalog.</li>
+<li><code>k</code> is the number of wrong rows.</li>
+<li><code>n</code> is the number of rows sampled.</li>
+<li><code>C(a, b)</code> is the number of ways to choose b rows from a rows.</li>
+</ul>
+<p>The k wrong rows are different rows, the sample is picked at random without replacement, and every row is equally likely to be picked. Real errors often come in groups (all variants of one product, for example), so a real catalog can behave differently; the table does not describe yours.</p>
+<p>Generated by <code>scripts/make-sampling-table.py</code>; do not edit the table by hand.</p>
+<pre><code>   N   k   n=15   n=30    n=50   n=100
+ 200   1   7.5%  15.0%   25.0%   50.0%
+ 200   5  32.6%  56.0%   76.7%   97.0%
+ 200  10  55.0%  81.1%   94.8%   99.9%
+ 200  25  87.5%  98.7%  &gt;99.9%  &gt;99.9%
+1000   1   1.5%   3.0%    5.0%   10.0%
+1000   5   7.3%  14.2%   22.7%   41.0%
+1000  10  14.1%  26.4%   40.3%   65.3%
+1000  25  31.8%  53.7%   72.7%   93.1%
+5000   1   0.3%   0.6%    1.0%    2.0%
+5000   5   1.5%   3.0%    4.9%    9.6%
+5000  10   3.0%   5.8%    9.6%   18.3%
+5000  25   7.3%  14.0%   22.3%   39.7%
+</code></pre>
+<p>With 1,000 rows, 10 of them wrong and 15 rows sampled, the chance that the sample contains at least one wrong row is 14.1%, and the chance it contains none is 85.9%.</p>
+<ul class="checks">
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Write down the product count and variant count of both exports before you sample. Why it bites: N in the table is the row count you start from, and a wrong N gives a wrong chance.</span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Choose the sample size from the table before you open any row. Why it bites: choosing after seeing a few rows makes the sample depend on what you saw.</span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Pick sampled rows at random, for example with a spreadsheet random column, not the first rows or the best sellers. Why it bites: the table assumes every row is equally likely to be picked.</span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Check the rows you already know are risky (SKUs with a leading zero, products with several options) as extra rows, not as part of the random sample. Why it bites: they are not random, so they do not count toward the chances in the table.</span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">Write down for each sampled row the SKU, the field you compared and the result. Why it bites: a later reader cannot tell what was looked at otherwise.</span></li>
+<li class="check"><span class="box" aria-hidden="true"></span><span class="check-text">If the sample finds no wrong row, write "none found in n of N rows", not "no errors". Why it bites: the table shows how often a sample of that size misses errors that are there.</span></li>
+</ul>
+<p>The <a href="https://catalog-signoff.pages.dev/guides/check-products-after-shopify-migration.html">Catalog Signoff guide to checking products after a Shopify migration</a> works the same arithmetic and links a two-file comparison.</p>
+</main>
+<footer>
+<p>The Markdown documents and CSV files are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The scripts and tests are MIT. LICENSE says which applies to what.</p>
+<p>Generated from <code>SPOT-CHECKS.md</code> in this repository.</p>
+<p>This project is independent and is not affiliated with Shopify or WooCommerce. Those names are used only to describe the platforms. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace. It is not affiliated with Wix.</p>
+<ul>
+<li><a href="https://catalog-signoff.pages.dev/guides/woocommerce-to-shopify-migration-checklist.html">Checklist guide</a></li>
+<li><a href="https://catalog-signoff.pages.dev/tools/readiness-scan.html">Free readiness scan</a></li>
+<li><a href="https://catalog-signoff.pages.dev/tools/redirect-map.html">Free redirect map</a></li>
+</ul>
+</footer>
+</body>
+</html>

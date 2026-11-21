@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Printable catalog migration checklists</title>
+<meta name="description" content="Printable pages of the WooCommerce, Magento, BigCommerce, Squarespace, and Wix checklists, with spot checks and tracker CSV files. Print or save as PDF.">
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+html { background: #fff; }
+body {
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2.5rem;
+  max-width: 40rem;
+  color: #111;
+  background: #fff;
+  font: 1.05rem/1.5 Georgia, "Iowan Old Style", Palatino, "Palatino Linotype", serif;
+  overflow-wrap: anywhere;
+}
+main, footer { max-width: 100%; }
+h1 { font-size: 1.55rem; line-height: 1.25; margin: 0 0 1rem; }
+h2 {
+  font-size: 1.2rem;
+  line-height: 1.3;
+  margin: 1.75rem 0 0.6rem;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+p { margin: 0.65rem 0; }
+a { color: inherit; text-decoration: underline; text-underline-offset: 0.12em; }
+ul, ol { margin: 0.6rem 0; padding-left: 1.3rem; }
+li { margin: 0.35rem 0; }
+ul.checks { list-style: none; padding-left: 0; margin-left: 0; }
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
+  list-style: none;
+  margin: 0.55rem 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.box {
+  flex: 0 0 auto;
+  width: 0.85em;
+  height: 0.85em;
+  margin-top: 0.28em;
+  border: 1px solid #000;
+}
+.check-text { min-width: 0; }
+blockquote {
+  margin: 1rem 0;
+  padding: 0 0 0 0.9rem;
+  border-left: 3px solid #000;
+}
+blockquote p { margin: 0.4rem 0; }
+pre, code {
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+}
+code { font-size: 0.92em; }
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-x: auto;
+  max-width: 100%;
+  margin: 0.8rem 0;
+  padding: 0.75rem 0.8rem;
+  border: 1px solid #bbb;
+}
+pre code { font-size: 0.82rem; }
+footer {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #000;
+  font-size: 0.95rem;
+}
+footer ul { padding-left: 1.2rem; }
+@page { margin: 16mm; }
+@media print {
+  html, body { color: #000; background: #fff; }
+  body { padding: 0; max-width: none; }
+  a { color: #000; text-decoration: underline; }
+  .box { border-color: #000; }
+  .nav { display: none; }
+  a[href^="https://"]::after,
+  a[href^="http://"]::after {
+    content: " (" attr(href) ")";
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Printable checklists</h1>
+<p>These are printable copies of the migration checklists in this repository, generated from the Markdown files, free to print or save as PDF from the browser. Download a file and open it in a browser, then print or save as PDF from the browser.</p>
+<h2>Checklists by source platform</h2>
+<ul>
+<li><a href="woocommerce-to-shopify.html">WooCommerce to Shopify migration checklist</a><br>
+WooCommerce product CSV. The matching tracker file is <a href="tracker-import/woocommerce.csv">tracker-import/woocommerce.csv</a> (40 checks).</li>
+<li><a href="magento-to-shopify.html">Magento 2 to Shopify migration checklist</a><br>
+Magento 2 product export. The matching tracker file is <a href="tracker-import/magento.csv">tracker-import/magento.csv</a> (83 checks).</li>
+<li><a href="bigcommerce-to-shopify.html">BigCommerce to Shopify migration checklist</a><br>
+BigCommerce product export. The matching tracker file is <a href="tracker-import/bigcommerce.csv">tracker-import/bigcommerce.csv</a> (60 checks).</li>
+<li><a href="squarespace-to-shopify.html">Squarespace to Shopify migration checklist</a><br>
+Squarespace product export. The matching tracker file is <a href="tracker-import/squarespace.csv">tracker-import/squarespace.csv</a> (29 checks).</li>
+<li><a href="wix-to-shopify.html">Wix to Shopify migration checklist</a><br>
+Wix Stores product export. The matching tracker file is <a href="tracker-import/wix.csv">tracker-import/wix.csv</a> (24 checks).</li>
+</ul>
+<h2>Spot checks and sampling worksheet</h2>
+<p><a href="spot-checks.html">Catalog migration spot checks</a> explains how to count products, variants and SKUs in an export. It ends with a worksheet that shows, as arithmetic on assumed examples, how likely a random sample is to contain a wrong row.</p>
+<h2>Tracker import files</h2>
+<p>The files in tracker-import/ are plain CSV with the columns Phase, Check, Details, and Source. They are generated from the checklist files and are under the same <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> licence. Most trackers and spreadsheets can import a CSV.</p>
+<ul>
+<li><a href="tracker-import/woocommerce.csv">woocommerce.csv</a></li>
+<li><a href="tracker-import/magento.csv">magento.csv</a></li>
+<li><a href="tracker-import/bigcommerce.csv">bigcommerce.csv</a></li>
+<li><a href="tracker-import/squarespace.csv">squarespace.csv</a></li>
+<li><a href="tracker-import/wix.csv">wix.csv</a></li>
+<li><a href="tracker-import/spot-checks.csv">spot-checks.csv</a></li>
+</ul>
+<h2>Free tools</h2>
+<ul>
+<li><a href="https://catalog-signoff.pages.dev/tools/import-check">Free import check</a>. A free tool from the same author as this checklist, for checking a Shopify product CSV before import.</li>
+<li><a href="https://catalog-signoff.pages.dev/sample/">Sample reports</a>. Example reports from the same author's free tools.</li>
+</ul>
+</main>
+<footer>
+<p>The Markdown documents and CSV files are <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The scripts and tests are MIT. LICENSE says which applies to what.</p>
+<p>Generated from the checklist files in this repository.</p>
+<p>This project is independent and is not affiliated with Shopify or WooCommerce. Those names are used only to describe the platforms. It is not affiliated with Adobe or Magento. It is not affiliated with BigCommerce. It is not affiliated with Squarespace. It is not affiliated with Wix.</p>
+<ul>
+<li><a href="https://catalog-signoff.pages.dev/guides/woocommerce-to-shopify-migration-checklist.html">Checklist guide</a></li>
+<li><a href="https://catalog-signoff.pages.dev/tools/readiness-scan.html">Free readiness scan</a></li>
+<li><a href="https://catalog-signoff.pages.dev/tools/redirect-map.html">Free redirect map</a></li>
+</ul>
+</footer>
+</body>
+</html>

@@ -1,0 +1,7 @@
+Phase,Check,Details,Source
+Sampling worksheet,Write down the product count and variant count of both exports before you sample.,"Why it bites: N in the table is the row count you start from, and a wrong N gives a wrong chance.",
+Sampling worksheet,Choose the sample size from the table before you open any row.,Why it bites: choosing after seeing a few rows makes the sample depend on what you saw.,
+Sampling worksheet,"Pick sampled rows at random, for example with a spreadsheet random column, not the first rows or the best sellers.",Why it bites: the table assumes every row is equally likely to be picked.,
+Sampling worksheet,"Check the rows you already know are risky (SKUs with a leading zero, products with several options) as extra rows, not as part of the random sample.","Why it bites: they are not random, so they do not count toward the chances in the table.",
+Sampling worksheet,"Write down for each sampled row the SKU, the field you compared and the result.",Why it bites: a later reader cannot tell what was looked at otherwise.,
+Sampling worksheet,"If the sample finds no wrong row, write ""none found in n of N rows"", not ""no errors"".",Why it bites: the table shows how often a sample of that size misses errors that are there.,

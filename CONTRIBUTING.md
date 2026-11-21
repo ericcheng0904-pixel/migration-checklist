@@ -1,6 +1,6 @@
 # Contributing
 
-Corrections are welcome. Open a pull request.
+Corrections are welcome. Open a pull request. Drafts for small issues are in [docs/good-first-issues.md](docs/good-first-issues.md).
 
 If you change a factual claim about Shopify, WooCommerce, Magento, BigCommerce, Squarespace, or Wix, link the official page you checked and write the date in [SOURCES.md](SOURCES.md). If the docs disagree, or you are not sure, say to check the current docs rather than guess.
 
@@ -16,6 +16,7 @@ You can still run the pieces on their own:
 
 ```bash
 python3 scripts/make-test-catalogs.py
+python3 scripts/make-tracker-csv.py
 python3 -m unittest
 python3 scripts/check_markdown_links.py
 ```

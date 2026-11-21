@@ -10,6 +10,8 @@ python3 scripts/make-test-catalogs.py
 
 The script overwrites the fourteen CSV files and does not change this README. A second run matches the first byte for byte.
 
+The Shopify files can be checked with [product-csv-lint](https://github.com/ericcheng0904-pixel/product-csv-lint), a command-line checker for a Shopify product CSV before import.
+
 ## Column names
 
 WooCommerce headers follow the [built-in product CSV schema](https://woocommerce.com/document/product-csv-importer-exporter/). The weight and dimension headers are `Weight (kg)`, `Length (cm)`, `Width (cm)`, and `Height (cm)` because this fictional store uses those units. The schema writes them as `Weight (unit)` and so on; the exporter inserts the store's unit, and `kg` and `cm` are units WooCommerce ships. The published [sample CSV](https://github.com/woocommerce/woocommerce/blob/trunk/plugins/woocommerce/sample-data/sample_products.csv) uses `Weight (lbs)` and `Length (in)` because that sample store uses pounds and inches. Check a fresh export from the store you are migrating. [Products settings](https://woocommerce.com/document/configuring-woocommerce-settings/products/) [Unit abbreviations](https://github.com/woocommerce/woocommerce/blob/trunk/plugins/woocommerce/i18n/units.php) [Exporter column labels](https://woocommerce.github.io/code-reference/files/woocommerce-includes-export-class-wc-product-csv-exporter.html)

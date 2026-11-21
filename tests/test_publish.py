@@ -28,7 +28,7 @@ class ReadmeTests(unittest.TestCase):
         self.assertIn("test-catalogs/small-clean", head)
         self.assertIn("[CHECKLIST.md](CHECKLIST.md)", head)
         self.assertIn("## Related free tools", head)
-        self.assertIn("# WooCommerce to Shopify catalog migration checklist", head)
+        self.assertIn("# Shopify catalog migration checklist", head)
         for url in TOOL_URLS:
             self.assertIn(url, head)
             self.assertNotIn("?", url)
